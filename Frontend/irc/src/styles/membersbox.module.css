@@ -1,0 +1,20 @@
+.box{
+    border: black 2px solid;
+}
+
+.container{
+    width: clamp(100px, 100%, 300px);
+}
+
+.membersbox{
+    margin: 10px;
+    height: 85%;
+    background-color: white;
+    overflow-y: scroll;
+}
+
+.profile{
+    margin: 10px;
+    height: 10%;
+    background-color: white;
+}

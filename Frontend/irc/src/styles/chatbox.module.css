@@ -1,0 +1,23 @@
+
+
+.box{
+    border: black 2px solid;
+}
+
+.container {
+    height: 100vh;
+    width: 100%;
+}
+
+.chatbox{
+    margin: 10px;
+    height: 85%;
+    background-color: white;
+    overflow-y: scroll;
+}
+
+.input{
+    margin: 10px;
+    height: 10%;
+    background-color: white;
+}
