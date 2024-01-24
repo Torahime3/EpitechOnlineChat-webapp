@@ -1,6 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
-const UserModel = require('./models/Users')
+const UserModel = require('./models/users')
 const PORT = 3000
 const HOST = "0.0.0.0"
 
