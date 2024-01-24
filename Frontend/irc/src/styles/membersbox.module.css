@@ -18,3 +18,10 @@
     height: 10%;
     background-color: white;
 }
+
+.title{
+    padding: 3px 0;
+    display: flex;
+    justify-content: center;
+    background-color: #e6e6e6;
+}

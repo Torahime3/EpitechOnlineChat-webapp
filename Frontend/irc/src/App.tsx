@@ -1,5 +1,5 @@
 import ChatBox from "./components/ChatBox.tsx";
-import MembersBox from "./components/forms/MembersBox.tsx";
+import MembersBox from "./components/MembersBox.tsx";
 
 
 function App() {
