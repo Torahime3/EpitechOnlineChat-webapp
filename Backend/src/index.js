@@ -1,6 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
-const UserModel = require('../models/Users')
+const UserModel = require('./models/Users')
 const PORT = 3000
 const HOST = "0.0.0.0"
 
@@ -18,7 +18,7 @@ app.get("/getUsers", (req, res) => {
         res.json(users)
 
     }).catch(function(err){
-        //res.json(err)
+        res.json(err)
         res.status(500).json()
     })
 })
