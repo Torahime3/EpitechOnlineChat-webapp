@@ -1,8 +1,16 @@
-import Hello from "./components/Hello.tsx";
+import ChatBox from "./components/ChatBox.tsx";
+import MembersBox from "./components/MembersBox.tsx";
+
 
 function App() {
 
-    return <div><Hello/></div>
-
+    return (
+        <>
+            <div style={{display: "flex"}}>
+                <MembersBox />
+                <ChatBox />
+            </div>
+        </>
+    )
 }
 export default App

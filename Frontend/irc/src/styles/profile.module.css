@@ -1,0 +1,13 @@
+.box{
+    border: black 2px solid;
+}
+
+.container{
+    margin: 2px;
+    padding: 2px;
+}
+
+.container:hover{
+    background-color: #e6e6e6;
+    cursor: pointer;
+}
