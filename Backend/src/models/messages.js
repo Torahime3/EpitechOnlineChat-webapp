@@ -3,21 +3,24 @@ const mongoose = require('mongoose');
 const messageSchema = new mongoose.Schema({
     user_id: {
         type: Number,
-        ref: 'users'
+        ref: 'users',
+        required: true,
     },
     message_content: {
         type: String,
-        maxLength: 500
-
+        maxLength: 500,
+        required: true,
     },
     message_date: {
         type: Date,
-        default: Date.now
+        default: Date.now,
+        required: true,
     },
 
     channel_id: {
         type: Number,
-        ref: 'channels'
+        ref: 'channels',
+        required: true,
     },
 });
 
