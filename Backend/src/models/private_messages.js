@@ -13,7 +13,8 @@ const privateMessageSchema = new mongoose.Schema({
     },
     pm_message_date: {
         type: Date,
-        required: true
+        required: true,
+        default: Date.now
     },
     target_id: {
         type: Number,
