@@ -1,28 +1,21 @@
 const express = require('express')
 const mongoose = require('mongoose')
-const UserModel = require('./models/users')
+const bodyParser = require('body-parser')
 const PORT = 3000
 const HOST = "0.0.0.0"
 
-const app = express()
+//Routes
+const userRoutes = require('./routes/usersRoutes');
 
+const app = express()
 mongoose.connect("mongodb+srv://bounaamatalal:Retrouver64@cluster0.1hou5pg.mongodb.net/t-jsf?retryWrites=true&w=majority")
 
+//On dit à express d'utiliser le module json pour parser les requêtes
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/', (req, res) => {
-  res.send('Test The Best HEHEHE')
-})
-
-app.get("/getUsers", (req, res) => {
-    UserModel.find({}).then(function(users){
-        res.json(users)
-
-    }).catch(function(err){
-        res.json(err)
-        res.status(500).json()
-    })
-})
-
+//On dit à express d'utiliser les routes définies dans le fichier usersRoutes.js
+app.use('/api/v1/users', userRoutes);
 
 app.listen(PORT, HOST, () => {
   console.log(`Example app listening on port ${PORT}`)
