@@ -2,7 +2,7 @@
 const UserModel = require('../models/users');
 
 exports.getAllUsers = async (req, res) => {
-    const result = await UserModel.find().catch(err => {
+    const result = await UserModel.find().select('-token').catch(err => {
         res.status(500).json(err);
     });
 
@@ -14,7 +14,7 @@ exports.getAllUsers = async (req, res) => {
 
 exports.getUserById = async (req, res) => {
 
-    const result = await UserModel.findById(req.params.id).catch(err => {
+    const result = await UserModel.findById(req.params.id).select('-token').catch(err => {
         res.status(500).json(err);
     });
 
