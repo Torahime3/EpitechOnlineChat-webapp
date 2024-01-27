@@ -1,15 +1,11 @@
-.box{
-    border: black 2px solid;
-}
-
 .container {
-    margin: 2px;
+    margin-top: 2px;
     padding: 5px;
     word-wrap: break-word;
 }
 
 .container:hover{
-    background-color: #e6e6e6;
+    background-color: #353942;
 }
 
 .hour {

@@ -3,4 +3,36 @@
     margin: 0;
     box-sizing: border-box;
     font: 14px sans-serif;
+    color: #c5c5c5;
+}
+
+.separator{
+    display: flex;
+}
+
+.channel_container p {
+    margin: 5px 10px 0 10px;
+    padding: 5px 5px;
+    border-radius: 5px;
+    font-size: 15px;
+}
+
+.channel_container p:before{
+    content: "#";
+    color: #c5c5c5;
+    margin-right: 3px;
+}
+
+.channel_container p:hover{
+    background-color: #292d34;
+    color: #fff;
+    cursor: pointer;
+}
+
+.active{
+    background-color: #282c34;
+}
+
+.active p{
+    color: #fff;
 }

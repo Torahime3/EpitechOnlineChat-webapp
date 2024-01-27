@@ -1,27 +1,22 @@
-.box{
-    border: black 2px solid;
-}
 
 .container{
     width: clamp(100px, 100%, 300px);
 }
 
 .membersbox{
-    margin: 10px;
-    height: 85%;
-    background-color: white;
-    overflow-y: scroll;
+    height: 90%;
+    background-color: #21252b;
 }
 
 .profile{
-    margin: 10px;
     height: 10%;
-    background-color: white;
+    background-color: #21252b;
+    border-top: 5px #282c34 solid;
 }
 
 .title{
     padding: 3px 0;
     display: flex;
     justify-content: center;
-    background-color: #e6e6e6;
+    background-color: #181b1f;
 }

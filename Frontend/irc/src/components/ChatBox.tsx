@@ -8,7 +8,7 @@ function ChatBox() {
     return (
         <>
             <div className={`${styles.container}`}>
-                <div className={`${styles.chatbox} ${styles.box}`}>
+                <div className={`${styles.chatbox}`}>
                     <Message/>
                     <Message/>
                     <Message/>
@@ -17,7 +17,7 @@ function ChatBox() {
                     <Message/>
                 </div>
 
-                <div className={`${styles.input} ${styles.box}`}>
+                <div className={`${styles.input}`}>
                     <InputMessage/>
                 </div>
             </div>

@@ -1,5 +1,5 @@
 import ChatBox from "./components/ChatBox.tsx";
-import MembersBox from "./components/MembersBox.tsx";
+import ChannelsBox from "./components/ChannelsBox.tsx";
 
 
 function App() {
@@ -7,7 +7,7 @@ function App() {
     return (
         <>
             <div style={{display: "flex"}}>
-                <MembersBox />
+                <ChannelsBox />
                 <ChatBox />
             </div>
         </>
