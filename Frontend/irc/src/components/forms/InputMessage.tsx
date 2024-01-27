@@ -7,7 +7,7 @@ function InputMessage() {
     <>
         <form className={styles.container} >
             <input className={styles.message_input} type="text" placeholder="Entrez votre message"/>
-            <button className={styles.submit_input} type="submit">Send</button>
+            <button className={styles.submit_input} type="submit">➤</button>
         </form>
     </>
     )}
