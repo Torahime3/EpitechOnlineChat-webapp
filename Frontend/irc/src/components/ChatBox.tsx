@@ -1,5 +1,5 @@
 import styles from '../styles/chatbox.module.css';
-import Message from "./Message.tsx";
+import Chat from "./Chat.tsx";
 import InputMessage from "./forms/InputMessage.tsx";
 
 function ChatBox() {
@@ -9,12 +9,12 @@ function ChatBox() {
         <>
             <div className={`${styles.container}`}>
                 <div className={`${styles.chatbox}`}>
-                    <Message/>
-                    <Message/>
-                    <Message/>
-                    <Message/>
-                    <Message/>
-                    <Message/>
+                    <Chat/>
+                    <Chat/>
+                    <Chat/>
+                    <Chat/>
+                    <Chat/>
+                    <Chat/>
                 </div>
 
                 <div className={`${styles.input}`}>

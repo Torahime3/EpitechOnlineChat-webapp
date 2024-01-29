@@ -27,11 +27,13 @@ exports.getUserById = async (req, res) => {
 
 exports.createUser = async (req, res) => {
     let username = req.body.username;
+    let password = req.body.password;
     let token = require('crypto').randomBytes(32).toString('hex')
     let role = 0;
 
     const user = new UserModel({
         username: username,
+        password: password,
         token: token,
         role: role
     })

@@ -1,6 +1,6 @@
 import styles from '../styles/message.module.css';
 
-function Message(){
+function Chat(){
 
     const messageData = {
         message: "Message de test pour tester le text wrap css en fonction de la taille de l'écran,",
@@ -16,4 +16,4 @@ function Message(){
 
 }
 
-export default Message;
+export default Chat;
