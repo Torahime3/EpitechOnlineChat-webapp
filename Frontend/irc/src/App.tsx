@@ -11,7 +11,6 @@ function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
-        console.log("test cookie use effect : " + cookie.user.token);
         if (cookie.user && cookie.user.token) {
             setIsLoggedIn(true);
         } else {
