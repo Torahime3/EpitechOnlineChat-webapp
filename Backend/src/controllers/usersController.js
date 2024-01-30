@@ -1,6 +1,24 @@
 //Constante permettant de récupérer le model des users
 const UserModel = require('../models/users');
 
+exports.loginUser = async (req, res) => {
+    let username = req.body.username;
+    let password = req.body.password;
+
+    const user = await UserModel.findOne({username: username, password: password}).catch(err => {
+        res.status(500).json(err);
+    });
+
+    if(user) {
+        res.status(200).json({
+            message: "success",
+            data: user
+        });
+    } else {
+        res.status(500).json({message: 'User not found'});
+    }
+}
+
 exports.getAllUsers = async (req, res) => {
     const result = await UserModel.find().select('-token').catch(err => {
         res.status(500).json(err);

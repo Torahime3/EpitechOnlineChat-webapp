@@ -14,6 +14,12 @@ mongoose.connect("mongodb+srv://bounaamatalal:Retrouver64@cluster0.1hou5pg.mongo
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+//logger
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url}`)
+  next()
+})
+
 //On dit à express d'utiliser les routes définies dans le fichier usersRoutes.js
 app.use('/api/v1/users', userRoutes);
 

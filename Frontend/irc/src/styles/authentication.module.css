@@ -1,0 +1,39 @@
+.container {
+    background-color: #181b1f;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box {
+    background-color: #2b2f34;
+    width: 400px;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.title {
+    color: #fff;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+.input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #606060;
+    background-color: #2b2f34;
+    margin-bottom: 10px;
+}
+
+.submit {
+    background-color: #1E90FF;
+}
+
+.submit:hover {
+    background-color: #47a3ff;
+    cursor: pointer;
+}
