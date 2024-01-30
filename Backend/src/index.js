@@ -6,6 +6,7 @@ const HOST = "0.0.0.0"
 
 //Routes
 const userRoutes = require('./routes/usersRoutes');
+const privateMessageRoutes = require('./routes/privateMessageRoutes');
 
 const app = express()
 mongoose.connect("mongodb+srv://bounaamatalal:Retrouver64@cluster0.1hou5pg.mongodb.net/t-jsf?retryWrites=true&w=majority")
@@ -16,6 +17,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //On dit à express d'utiliser les routes définies dans le fichier usersRoutes.js
 app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/privateMessages', privateMessageRoutes);
 
 app.listen(PORT, HOST, () => {
   console.log(`Example app listening on port ${PORT}`)
