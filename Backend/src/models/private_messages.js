@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const privateMessageSchema = new mongoose.Schema({
     user_id: {
-        type: Number,
+        type: String,
         ref: 'users',
         required: true
     },
@@ -17,7 +17,7 @@ const privateMessageSchema = new mongoose.Schema({
         default: Date.now
     },
     target_id: {
-        type: Number,
+        type: String,
         ref: 'users',
         required: true
     },
