@@ -1,16 +1,20 @@
 import styles from '../styles/membersbox.module.css';
 import Channel from "./Channel.tsx";
-import {useState} from "react";
 import {useCookies} from "react-cookie";
+import {Dispatch, SetStateAction} from "react";
 
-function ChannelsBox(){
+interface Props{
+    setSelectedChannel: Dispatch<SetStateAction<number>>;
+    selectedChannel: number;
+}
+
+function ChannelsBox({ setSelectedChannel, selectedChannel }: Props){
 
     const[cookie, removeCookie] = useCookies(['user']);
-    const[selectedChannel, setselectedChannel] = useState(1);
     const channels = ["général","music","dev","animaux", "jeux", "films" ,"nourriture","sport","voyage","autre"]
 
-    const handleChannelClick = (channelId: number) => {
-        setselectedChannel(channelId)
+    const handleChannelClick = (id: number) => {
+        setSelectedChannel(id);
     }
 
     const handleLogout = () => {
@@ -26,7 +30,7 @@ function ChannelsBox(){
                     </div>
 
                     {channels.map((channel, id) => (
-                        <div onClick={() => handleChannelClick(id)}>
+                        <div onClick={() => handleChannelClick(id)} key={id}>
                             <Channel
                                 name={channel}
                                 id={id}

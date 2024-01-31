@@ -8,7 +8,8 @@ import {useEffect, useState} from "react";
 function App() {
 
     const [cookie] = useCookies(['user']);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(true);
+    const [selectedChannel, setSelectedChannel] = useState(1);
 
     useEffect(() => {
         if (cookie.user && cookie.user.token) {
@@ -21,8 +22,8 @@ function App() {
     return (
         <>
             {isLoggedIn ? (
-                <div style={{display: "flex"}}>
-                    <ChannelsBox />
+                <div className="panel">
+                    <ChannelsBox setSelectedChannel={setSelectedChannel} selectedChannel={selectedChannel} />
                     <ChatBox />
                 </div>
             ) : (
