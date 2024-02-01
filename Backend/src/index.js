@@ -23,11 +23,11 @@ app.use((req, res, next) => {
   next()
 })
 
-//On dit à express d'utiliser les routes définies dans le fichier usersRoutes.js
+//On dit à express d'utiliser les routes définies dans les fichiers correspondant
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/channels', channelRoute);
 app.use('/api/v1/privateMessages', privateMessageRoutes);
 
 app.listen(PORT, HOST, () => {
-  console.log(`Example app listening on port ${PORT}`)
+  console.log(`Discord App Back-end Listening on ${PORT}`)
 })
