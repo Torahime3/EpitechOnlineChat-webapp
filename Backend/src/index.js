@@ -7,6 +7,7 @@ require('dotenv').config()
 
 //Routes
 const userRoutes = require('./routes/usersRoutes');
+const channelRoute = require('./routes/channelsRoutes')
 const privateMessageRoutes = require('./routes/privateMessageRoutes');
 
 const app = express()
@@ -24,6 +25,7 @@ app.use((req, res, next) => {
 
 //On dit à express d'utiliser les routes définies dans le fichier usersRoutes.js
 app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/channels', channelRoute);
 app.use('/api/v1/privateMessages', privateMessageRoutes);
 
 app.listen(PORT, HOST, () => {
