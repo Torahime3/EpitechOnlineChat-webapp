@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const privateMessageSchema = new mongoose.Schema({
-    user_id: {
+    sender_id: {
         type: String,
         ref: 'users',
         required: true

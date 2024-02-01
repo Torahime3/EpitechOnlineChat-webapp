@@ -9,7 +9,7 @@ function App() {
 
     const [cookie] = useCookies(['user']);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [selectedChannel, setSelectedChannel] = useState(0);
+    const [selectedChannel, setSelectedChannel] = useState(-1);
 
     useEffect(() => {
         if (cookie.user && cookie.user.token) {

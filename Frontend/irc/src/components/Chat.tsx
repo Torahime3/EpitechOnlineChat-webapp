@@ -1,11 +1,17 @@
 import styles from '../styles/message.module.css';
 
-function Chat(){
+interface Props {
+    sender: string;
+    time: string;
+    message: string;
+}
+
+function Chat(props: Props){
 
     const messageData = {
-        message: "Message de test pour tester le text wrap css en fonction de la taille de l'écran,",
-        sender: "John",
-        time: "12:00"
+        sender: props.sender,
+        time: props.time,
+        message: props.message,
     }
 
     return(

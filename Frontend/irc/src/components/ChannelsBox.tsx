@@ -1,7 +1,7 @@
 import styles from '../styles/membersbox.module.css';
 import Channel from "./Channel.tsx";
 import {useCookies} from "react-cookie";
-import {Dispatch, SetStateAction} from "react";
+import {Dispatch, SetStateAction, useEffect, useState} from "react";
 
 interface Props{
     setSelectedChannel: Dispatch<SetStateAction<number>>;
@@ -11,7 +11,19 @@ interface Props{
 function ChannelsBox({ setSelectedChannel, selectedChannel }: Props){
 
     const[cookie, removeCookie] = useCookies(['user']);
-    const channels = ["général","music","dev","animaux", "jeux", "films" ,"nourriture","sport","voyage","autre"]
+    const[channelsList, setChannelsList] = useState<any[]>([]);
+
+    useEffect(() => {
+        fetch("api/v1/channels", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        }).then(request => request.json())
+            .then((response) => {
+                setChannelsList(response);
+            });
+    }, []);
 
     const handleChannelClick = (id: number) => {
         setSelectedChannel(id);
@@ -29,12 +41,12 @@ function ChannelsBox({ setSelectedChannel, selectedChannel }: Props){
                         <p>Channels</p>
                     </div>
 
-                    {channels.map((channel, id) => (
-                        <div onClick={() => handleChannelClick(id)} key={id}>
+                    {channelsList.map((channel, id) => (
+                        <div onClick={() => handleChannelClick(channel._id)} key={id}>
                             <Channel
-                                name={channel}
-                                id={id}
-                                selected={selectedChannel === id}
+                                name={channel.channel_name}
+                                id={channel._id}
+                                selected={selectedChannel === channel._id}
                             />
                         </div>
                     ))}

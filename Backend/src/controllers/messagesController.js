@@ -1,9 +1,10 @@
 const MessageModel = require('../models/messages');
+const UserModel = require('../models/users');
 
 exports.getAllMessages = async (req, res) => {
     try {
-        const channelId = req.params.channelId;
-        const result = await MessageModel.find({ channel_id: channelId }).populate('user_id').populate('channel_id').exec();
+    
+        const result = await MessageModel.find();
         res.json({
             success: true,
             result: result
@@ -13,33 +14,60 @@ exports.getAllMessages = async (req, res) => {
     }
 };
 
-exports.getMessageById = async (req, res) => {
+exports.getMessageByChannelId = async (req, res) => {
+ 
+
     try {
-        const result = await MessageModel.findById(req.params.messageId).populate('user_id').populate('channel_id').exec();
+        const channelId = req.params.channelId;
+        const messages = await MessageModel.find({ channel_id: channelId });
+        
+        for (let i = 0; i < messages.length; i++) {
+            const message = messages[i];
+            const user = await UserModel.findOne({ _id: message.sender_id }).select('username').then((user) => user.username);
+            messages[i] = {
+                ...message._doc,
+                sender_username: user
+            };
+        }
+
         res.json({
             success: true,
-            result: result
+            result: messages
         });
+
     } catch (err) {
-        res.status(500).json(err);
+        res.status(500).json({
+            success: false,
+            result: err
+        });
     }
 };
 
 exports.createMessage = async (req, res) => {
     try {
-        const { user_id, message_content } = req.body;
+
+        const sender_id = req.body.user_id;
+        const message_content = req.body.message_content;
         const channelId = req.params.channelId;
 
         const message = new MessageModel({
-            user_id: user_id,
+            sender_id: sender_id,
             message_content: message_content,
             channel_id: channelId
         });
+
         await message.save();
 
-        res.status(200).json(message);
+        res.json({
+            success: true,
+            message: 'Message créé',
+            result: message
+        });
+
     } catch (err) {
-        res.status(500).json(err);
+        res.status(500).json({
+            err: err
+        });
     }
 };
 

@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
 const messageSchema = new mongoose.Schema({
-    user_id: {
-        type: Number,
+    sender_id: {
+        type: String,
         ref: 'users',
         required: true,
     },
@@ -18,7 +18,7 @@ const messageSchema = new mongoose.Schema({
     },
 
     channel_id: {
-        type: Number,
+        type: String,
         ref: 'channels',
         required: true,
     },

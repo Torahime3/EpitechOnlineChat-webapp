@@ -9,6 +9,7 @@ require('dotenv').config()
 const userRoutes = require('./routes/usersRoutes');
 const channelRoute = require('./routes/channelsRoutes')
 const privateMessageRoutes = require('./routes/privateMessageRoutes');
+const messagesRoutes = require('./routes/messagesRoutes');
 
 const app = express()
 mongoose.connect(process.env.DB_URL).then(() => console.log("Connection to database succeed")).catch(err => console.log(err))
@@ -27,6 +28,7 @@ app.use((req, res, next) => {
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/channels', channelRoute);
 app.use('/api/v1/privateMessages', privateMessageRoutes);
+app.use('/api/v1/messages', messagesRoutes);
 
 app.listen(PORT, HOST, () => {
   console.log(`Discord App Back-end Listening on ${PORT}`)
