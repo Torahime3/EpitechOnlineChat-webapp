@@ -1,5 +1,6 @@
 import styles from '../styles/chatbox.module.css';
 import Chat from "./Chat.tsx";
+import SystemChat from './SystemChat.tsx';
 import InputMessage from "./forms/InputMessage.tsx";
 import {useEffect, useState} from "react";
 
@@ -72,9 +73,7 @@ function ChatBox({selectedChannel}: Props) {
 
 
                     {loadingMessages ? (
-                        <div className={styles.loading}>
-                            <p>Loading messages...</p>
-                         </div>
+                        <> </>
                     ) : messages.length === 0 ? (
                         <div className={styles.empty_channel}>
                             <div className={styles.empty_face}> </div>
@@ -84,20 +83,25 @@ function ChatBox({selectedChannel}: Props) {
                         messages.map((message) => (
                             <div className={styles.message_container}>
                                 <Chat
-                                    key={message.id} // Add a unique key for each message
+                                    key={message.id}
                                     sender={message.sender_username}
                                     time={message.message_date}
                                     message={message.message_content}
                                 />
                             </div>
                         ))
+
                     )}
+
+                        {/* <div className={`${styles.system}`} >
+                            <SystemChat time={"2021-03-01T12:00:00.000Z"} message={"nathan a rejoinds le channel !"} />
+                        </div> */}
 
                 </div>
                 
 
                 <div className={`${styles.input}`}>
-                    <InputMessage/>
+                    <InputMessage selectedChannel={selectedChannel}/>
                 </div>
             </div>
 

@@ -11,7 +11,7 @@
 
 .message_input{
     width: 90%;
-    height: 70%;
+    height: 60%;
     margin-left: 15px;
     padding-left: 15px;
     border: none;
@@ -21,7 +21,7 @@
 
 .submit_input{
     width: 5vw;
-    height: 70%;
+    height: 60%;
     margin-right: 15px;
     border: none;
     outline: none;

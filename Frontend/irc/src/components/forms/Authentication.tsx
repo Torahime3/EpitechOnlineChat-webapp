@@ -31,7 +31,6 @@ function Authentication() {
             .then((response) => {
                 if(response.message == "success"){
                     setCookie("user", response.data, {path: "/"})
-                    console.log(response.data);
                 } else {
                     alert("Identifiant incorrect")
                 }
