@@ -16,19 +16,20 @@ function ChatBox({selectedChannel}: Props) {
     });
 
     const [messages, setMessages] = useState<any[]>([]);;
+    const [loadingMessages, setLoadingMessages] = useState(true);
+
 
     useEffect(() => {
-        setChannelInfo({
-            channel_creation_date: "[No channel selected]",
-            channel_name: "",
-            channel_description: "",
-        });
-
+ 
         setMessages([]);
 
         if(selectedChannel === -1){
             return;
         }
+
+        setLoadingMessages(true);
+
+
         // FETCH MESSAGES INFO
         fetch("api/v1/messages/" + selectedChannel, {
             method: "GET",
@@ -38,7 +39,7 @@ function ChatBox({selectedChannel}: Props) {
         }).then(request => request.json())
             .then((response) => {
                 setMessages(response.result);
-                console.log(response.result);
+                setLoadingMessages(false);
             });
 
         // FETCH CHANNELS INFO
@@ -69,12 +70,28 @@ function ChatBox({selectedChannel}: Props) {
                         <span>{channelInfo.channel_description}</span>
                     </div>
 
-                    {messages.map((message) => (
-                        <Chat 
-                            sender={message.sender_username} 
-                            time={message.message_date}
-                            message={message.message_content}/>
-                    ))}
+
+                    {loadingMessages ? (
+                        <div className={styles.loading}>
+                            <p>Loading messages...</p>
+                         </div>
+                    ) : messages.length === 0 ? (
+                        <div className={styles.empty_channel}>
+                            <div className={styles.empty_face}> </div>
+                            <p>Aucun message dans ce salon</p>
+                        </div>
+                    ) : (
+                        messages.map((message) => (
+                            <div className={styles.message_container}>
+                                <Chat
+                                    key={message.id} // Add a unique key for each message
+                                    sender={message.sender_username}
+                                    time={message.message_date}
+                                    message={message.message_content}
+                                />
+                            </div>
+                        ))
+                    )}
 
                 </div>
                 

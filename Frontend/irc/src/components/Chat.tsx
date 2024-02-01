@@ -8,16 +8,19 @@ interface Props {
 
 function Chat(props: Props){
 
+    const time = props.time.substring(11, 16);
+    const day = props.time.substring(6, 10);
+
     const messageData = {
         sender: props.sender,
-        time: props.time,
+        time: time,
         message: props.message,
     }
 
     return(
-        <div className={`${styles.container}`}>
-            <span className={styles.hour}>[{messageData.time}]</span> {messageData.sender}: {messageData.message}
-        </div>
+            <>
+                <span className={styles.hour}>[{messageData.time}]</span> {messageData.sender}: {messageData.message}
+            </>
     );
 
 }

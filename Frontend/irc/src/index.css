@@ -21,6 +21,7 @@
     font-size: 15px;
 }
 
+
 .channel_container p:before{
     content: "#";
     color: #c5c5c5;
@@ -28,7 +29,7 @@
 }
 
 .channel_container p:hover{
-    background-color: #292d34;
+    background-color: #2c508f;
     color: #fff;
     cursor: pointer;
 }
@@ -39,4 +40,9 @@
 
 .active p{
     color: #fff;
+}
+
+.profile_avatar{
+    width: 20%;
+    border-radius: 50%;
 }

@@ -3,6 +3,52 @@
     width: 100%;
 }
 
+.message_container {
+    margin-top: 2px;
+    margin: 5px;
+    padding: 5px;
+    word-wrap: break-word;
+}
+
+.message_container:hover{
+    background-color: #353942;
+}
+
+.empty_channel{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 90%;
+    border-radius: 5px;
+}
+
+.empty_channel p{
+    margin-top: 30px;
+    font-weight: bold;
+    font-size: large;
+    color:
+}
+
+
+.empty_face {
+    background-image: url("../assets/empty_channel.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    filter: brightness(0.5);
+    height: 100px;
+    width: 100px;
+}
+
+.loading{
+    margin: 5px;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #21252b;
+    width: fit-content;
+}
+
+
 .chatbox{
     height: 90%;
     overflow-y: scroll;

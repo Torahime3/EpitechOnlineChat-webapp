@@ -2,6 +2,7 @@ import styles from '../styles/membersbox.module.css';
 import Channel from "./Channel.tsx";
 import {useCookies} from "react-cookie";
 import {Dispatch, SetStateAction, useEffect, useState} from "react";
+import Profile from './Profile.tsx';
 
 interface Props{
     setSelectedChannel: Dispatch<SetStateAction<number>>;
@@ -54,11 +55,8 @@ function ChannelsBox({ setSelectedChannel, selectedChannel }: Props){
                 </div>
 
                 <div className={`${styles.profile} ${styles.panel}`}>
-                    <div>
-                        <p>Username : {cookie.user.username}</p>
-                        <p>Password : {cookie.user.password}</p>
-                    </div>
-                        <button className={`${styles.logout}`} onClick={() => handleLogout()}>Logout</button>
+                    <Profile name={cookie.user.username}/>
+                    <button className={`${styles.logout}`} onClick={() => handleLogout()}>Logout</button>
                 </div>
             </div>
         </>
