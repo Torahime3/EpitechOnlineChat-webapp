@@ -41,10 +41,12 @@ function ChannelsBox({ setSelectedChannel, selectedChannel }: Props){
 
                 </div>
 
-                <div className={`${styles.profile}`}>
-                    <p>Username : {cookie.user.username}</p>
-                    <p>Password : {cookie.user.password}</p>
-                    <button className="logout" onClick={() => handleLogout()}>Logout</button>
+                <div className={`${styles.profile} ${styles.panel}`}>
+                    <div>
+                        <p>Username : {cookie.user.username}</p>
+                        <p>Password : {cookie.user.password}</p>
+                    </div>
+                        <button className={`${styles.logout}`} onClick={() => handleLogout()}>Logout</button>
                 </div>
             </div>
         </>

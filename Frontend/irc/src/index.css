@@ -40,9 +40,3 @@
 .active p{
     color: #fff;
 }
-
-.logout {
-    color: white;
-    cursor: pointer;
-    background-color: red;
-}

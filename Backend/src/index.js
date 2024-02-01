@@ -3,13 +3,14 @@ const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const PORT = 3000
 const HOST = "0.0.0.0"
+require('dotenv').config()
 
 //Routes
 const userRoutes = require('./routes/usersRoutes');
 const privateMessageRoutes = require('./routes/privateMessageRoutes');
 
 const app = express()
-mongoose.connect("mongodb+srv://bounaamatalal:Retrouver64@cluster0.1hou5pg.mongodb.net/t-jsf?retryWrites=true&w=majority")
+mongoose.connect(process.env.DB_URL).then(() => console.log("Connection to database succeed")).catch(err => console.log(err))
 
 //On dit à express d'utiliser le module json pour parser les requêtes
 app.use(bodyParser.json());

@@ -13,3 +13,10 @@
     height: 10%;
     background-color: white;
 }
+
+.title {
+    margin: 5px;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #21252b;
+}

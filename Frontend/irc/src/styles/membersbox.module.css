@@ -20,3 +20,18 @@
     justify-content: center;
     background-color: #181b1f;
 }
+
+.panel{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.logout {
+    color: white;
+    cursor: pointer;
+    background-color: #5e5e5e;
+    border: none;
+    border-radius: 4px;
+    padding: 5px;
+}
