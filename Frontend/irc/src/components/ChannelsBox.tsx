@@ -13,6 +13,7 @@ function ChannelsBox({ setSelectedChannel, selectedChannel }: Props){
 
     const[cookie, removeCookie] = useCookies(['user']);
     const[channelsList, setChannelsList] = useState<any[]>([]);
+    const[isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         fetch("api/v1/channels", {

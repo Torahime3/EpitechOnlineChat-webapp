@@ -30,19 +30,6 @@ function ChatBox({selectedChannel}: Props) {
 
         setLoadingMessages(true);
 
-
-        // FETCH MESSAGES INFO
-        fetch("api/v1/messages/" + selectedChannel, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        }).then(request => request.json())
-            .then((response) => {
-                setMessages(response.result);
-                setLoadingMessages(false);
-            });
-
         // FETCH CHANNELS INFO
         fetch("api/v1/channels/" + selectedChannel, {
             method: "GET",
@@ -57,6 +44,18 @@ function ChatBox({selectedChannel}: Props) {
                     channel_description: response.channel_description,
 
                 })
+            });
+
+        // FETCH MESSAGES INFO
+        fetch("api/v1/messages/" + selectedChannel, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        }).then(request => request.json())
+            .then((response) => {
+                setMessages(response.result);
+                setLoadingMessages(false);
             });
         
     }, [selectedChannel]);
