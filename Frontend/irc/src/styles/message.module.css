@@ -12,3 +12,13 @@
 .hour {
     color: #0182ff;
 }
+
+.system{
+    margin-top: 2px;
+    margin: 5px;
+    padding: 5px;
+    word-wrap: break-word;
+    background-color: rgba(190, 190, 190, 0.075);
+    width: fit-content;
+    border-radius: 10px;
+}

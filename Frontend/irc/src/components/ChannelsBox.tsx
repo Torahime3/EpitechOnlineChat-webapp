@@ -13,10 +13,10 @@ function ChannelsBox({ setSelectedChannel, selectedChannel }: Props){
 
     const[cookie, removeCookie] = useCookies(['user']);
     const[channelsList, setChannelsList] = useState<any[]>([]);
-    const[isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        fetch("api/v1/channels", {
+        console.log(cookie.user._id);
+        fetch("api/v1/userChannels/" + cookie.user._id, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -44,11 +44,11 @@ function ChannelsBox({ setSelectedChannel, selectedChannel }: Props){
                     </div>
 
                     {channelsList.map((channel, id) => (
-                        <div onClick={() => handleChannelClick(channel._id)} key={id}>
+                        <div onClick={() => handleChannelClick(channel.channel_id)} key={id}>
                             <Channel
                                 name={channel.channel_name}
-                                id={channel._id}
-                                selected={selectedChannel === channel._id}
+                                id={channel.channel_id}
+                                selected={selectedChannel === channel.channel_id}
                             />
                         </div>
                     ))}

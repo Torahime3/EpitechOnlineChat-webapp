@@ -1,27 +1,56 @@
+import React from 'react';
 import styles from '../styles/message.module.css';
 
-interface Props {
-    time: string;
-    message: string;
+
+export enum Type{
+    INFO = "#353942",
+    SUCCESS = "#31522f",
+    WARNING = "#522f2f",
 }
 
-function Chat(props: Props){
+interface Props {
+    message: string,
+    time?: string,
+    type: Type;
+}
 
-    const time = props.time.substring(11, 16);
-    const day = props.time.substring(6, 10);
+function SystemChat(props: Props){
 
-    const messageData = {
+    const { message, time, type } = props;
 
-        time: time,
-        message: props.message,
+    if(time){
+        const formattedTime  = time.substring(11, 16);
+        const formattedDay  = time.substring(6, 10);
+
+        return(
+            <>
+                <div className={`${styles.system}`} style={{ backgroundColor: type }}>
+                    <span className={styles.hour}>[{formattedTime}]</span>
+                     {message.split('\n').map((line) => (
+                        <>
+                            {line}
+                            <br />
+                        </>
+                    ))}
+                </div>
+            </>
+        )
+
     }
 
     return(
             <>
-                <span className={styles.hour}>[{messageData.time}]</span> {messageData.message}
+                 <div className={`${styles.system}`} style={{ backgroundColor: type }}>
+                    {message.split('\n').map((line) => (
+                        <>
+                            {line}
+                            <br />
+                        </>
+                    ))}
+                </div>
             </>
     );
 
 }
 
-export default Chat;
+export default SystemChat;
