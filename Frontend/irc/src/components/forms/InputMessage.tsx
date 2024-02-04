@@ -1,17 +1,31 @@
 import { useCookies } from 'react-cookie';
 import styles from '../../styles/inputmessage.module.css';
+import { useState } from 'react';
 
-function InputMessage({selectedChannel}: any) {
+function InputMessage({selectedChannel, executeCommand}: any) {
 
     const [cookie] = useCookies(['user']);
+    const [messageContent, setMessageContent] = useState('');
+    const [isCommand, setIsCommand] = useState(false);
 
     function handleSubmit(e: any){
         e.preventDefault();
-        const message_content = new FormData(e.target).get('content');
+
+        if (!messageContent.trim()) {
+            return;
+        }
+
+        if(isCommand){
+            const [command, ...args] = messageContent.slice(1).split(' ');
+            executeCommand(command, args);
+            setMessageContent('');
+            return;
+        }
+
         const message = {
             user_id: cookie.user._id,
-            message_content: message_content,
-        }
+            message_content: messageContent,
+        };
 
         fetch("api/v1/messages/" + selectedChannel, {
             method: "POST",
@@ -19,24 +33,44 @@ function InputMessage({selectedChannel}: any) {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(message),
-        }).then(request => request.json()).then((response => {
-            e.target.reset();
-        })).catch((error) => {
-            alert(error)
-        });
-
-
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to send message');
+                }
+                return response.json();
+            })
+            .then(() => {
+                setMessageContent('');
+            })
+            .catch((error) => {
+                alert(error)
+            });
 
     }
 
+    function onInputChange(e: any){
 
-  return (
-    <>
+        const input = e.target.value;
+        setIsCommand(input.startsWith("/"));
+        setMessageContent(input);
+    }
+
+
+    return (
         <form className={styles.container} onSubmit={handleSubmit}>
-            <input name="content" className={styles.message_input} type="text" placeholder="Entrez votre message"/>
+            <input
+                onChange={onInputChange}
+                name="content"
+                className={`${styles.message_input} ${isCommand ? styles.command : ''}`}
+                type="text"
+                placeholder="Entrez votre message"
+                value={messageContent}
+            />
             <button name="submit" className={styles.submit_input} type="submit">➤</button>
         </form>
-    </>
-    )}
+    );
+
+}
 
 export default InputMessage

@@ -1,6 +1,4 @@
-import React from 'react';
 import styles from '../styles/message.module.css';
-
 
 export enum Type{
     INFO = "#353942",
@@ -9,6 +7,7 @@ export enum Type{
 }
 
 interface Props {
+    title?: string,
     message: string,
     time?: string,
     type: Type;
@@ -16,7 +15,7 @@ interface Props {
 
 function SystemChat(props: Props){
 
-    const { message, time, type } = props;
+    const { title, message, time, type } = props;
 
     if(time){
         const formattedTime  = time.substring(11, 16);
@@ -41,6 +40,7 @@ function SystemChat(props: Props){
     return(
             <>
                  <div className={`${styles.system}`} style={{ backgroundColor: type }}>
+                    {title ? <h1 className={`${styles.system_title}`}> {title} </h1> : ""}
                     {message.split('\n').map((line) => (
                         <>
                             {line}

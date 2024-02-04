@@ -1,3 +1,4 @@
+import { handleCommand } from '../scripts/handleCommand.ts';
 import styles from '../styles/chatbox.module.css';
 import Chat from "./Chat.tsx";
 import SystemChat, { Type } from './SystemChat.tsx';
@@ -34,11 +35,7 @@ function ChatBox({selectedChannel}: Props) {
             },
         }).then(request => request.json())
             .then((response) => {
-                setChannelInfo({
-                    channel_creation_date: response.channel_creation_date,
-                    channel_name: response.channel_name,
-                    channel_description: response.channel_description,
-                })
+                setChannelInfo(response)
             });
 
         // FETCH MESSAGES INFO
@@ -54,6 +51,17 @@ function ChatBox({selectedChannel}: Props) {
             });
         
     }, [selectedChannel]);
+
+    async function executeCommand(command: string, args: string[]) {
+
+        const response = await handleCommand(command, args, selectedChannel) as { result: string, title: string, type: Type};
+        setMessages(prevMessages => [...prevMessages, { 
+            message_title: response.title,
+            message_content: response.result,
+            message_type: response.type,
+            system_chat: true,
+        }]);
+    }
 
 
     return (
@@ -73,6 +81,7 @@ function ChatBox({selectedChannel}: Props) {
                     {helpChannel ? ( 
                         
                         <SystemChat 
+                        title={"Bienvenue"}
                         message={"Bienvenue sur la discord app\n" +
                         "Pour commencer veuillez selectionner un salon sur la gauche.\n\n" +
                         "Liste de commandes : \n" +
@@ -96,27 +105,33 @@ function ChatBox({selectedChannel}: Props) {
                         ) : (
                             messages.map((message) => (
                                 <div className={styles.message_container}>
-                                    <Chat
+
+                                    {message.system_chat ? (
+                                        <SystemChat 
+                                        title={message.message_title}
+                                        message={message.message_content} 
+                                        type={message.message_type} />
+                                    ) : ( 
+                                        <Chat
                                         key={message.id}
                                         sender={message.sender_username}
                                         time={message.message_date}
                                         message={message.message_content}
                                     />
+                                    )}
+                                    
+
                                 </div>
                             ))
                         )
                     
                     ) }
 
-
-                        {/* { <div className={`${styles.system}`} >
-                            <SystemChat time={""} message={"nathan a rejoinds le channel !"} />
-                        </div> } */}
                 </div>
                 
 
                 <div className={`${styles.input}`}>
-                    <InputMessage selectedChannel={selectedChannel}/>
+                    <InputMessage selectedChannel={selectedChannel} executeCommand={executeCommand} />
                 </div>
             </div>
 

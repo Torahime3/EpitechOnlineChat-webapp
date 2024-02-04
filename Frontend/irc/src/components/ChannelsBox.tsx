@@ -1,4 +1,4 @@
-import styles from '../styles/membersbox.module.css';
+import styles from '../styles/channelsbox.module.css';
 import Channel from "./Channel.tsx";
 import {useCookies} from "react-cookie";
 import {Dispatch, SetStateAction, useEffect, useState} from "react";

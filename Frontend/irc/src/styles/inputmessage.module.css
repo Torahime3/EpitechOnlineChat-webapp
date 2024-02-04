@@ -14,10 +14,22 @@
     height: 60%;
     margin-left: 15px;
     padding-left: 15px;
-    border: none;
     background-color: #30333a;
     border-radius: 10px;
+    border: none;
+    outline: 0;
 }
+
+.command::after{
+    background-color: red;
+    width: 10px;
+}
+
+.command{
+    border: 2px solid #1E90FF;
+    font-weight: bold;
+}
+
 
 .submit_input{
     width: 5vw;
