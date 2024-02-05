@@ -1,10 +1,28 @@
 const UserChannelModel = require('../models/user_channels');
+const UserModel = require('../models/users');
 const ChannelModel = require('../models/channels');
 
 exports.getAllUserChannels = async (req, res) => {
     const userChannels = await UserChannelModel.find();
     res.status(200).json(userChannels);
 }
+
+exports.getUsersByChannelId = async (req, res) => {
+
+        const channelId = req.params.channelId;
+        const channelUsers = await UserChannelModel.find({channel_id: channelId});
+    
+        for(let i = 0; i < channelUsers.length; i++){
+            const channelUser = channelUsers[i];
+            const username = await UserModel.find({_id: channelUser.user_id}).select('username').then((user) => user[0].username);
+            channelUsers[i] = {
+                ...channelUser._doc,
+                username: username
+            };
+        }
+    
+        res.status(200).json(channelUsers);
+    }
 
 exports.getChannelsByUserId = async (req, res) => {
     
