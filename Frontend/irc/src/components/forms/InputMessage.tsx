@@ -17,8 +17,9 @@ function InputMessage({selectedChannel, executeCommand}: any) {
 
         if(isCommand){
             const [command, ...args] = messageContent.slice(1).split(' ');
-            executeCommand(command, args);
+            executeCommand(command, args, cookie.user._id,);
             setMessageContent('');
+            setIsCommand(false);
             return;
         }
 

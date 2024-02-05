@@ -1,39 +1,24 @@
 import { Type } from '../components/SystemChat';
+import { listCommand } from './commands/listCommand';
+import { nickCommand } from './commands/nickCommand';
 
-export async function handleCommand(command: string, args: string[], selectedChannel: number): Promise<{ result: string; title: string; type?: Type | undefined; }> {
-    console.log("command: " + command + ", args: [" + args + "], selectedChannel: " + selectedChannel);
+export async function handleCommand(command: string, args: string[], selectedChannel: number, userCookie: string): Promise<{ result: string; title: string; type?: Type | undefined; }> {
+    console.log("command: " + command + ", args: [" + args + "], selectedChannel: " + selectedChannel, "userCookie: " + userCookie);
 
     switch (command) {
 
         case "list":
+            return listCommand(args, selectedChannel);
+        case "nick":
+            return nickCommand(args, userCookie);
 
-            try {
-                const response = await fetch("api/v1/channels", {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                });
-                const channels = await response.json();
-                const channelNames = String(channels.map((channel: any) => " - " + channel.channel_name + (channel._id === selectedChannel ? " (Actuel)" : "")).join("\n"));
-                return {
-                    result: channelNames,
-                    title: "Channels disponibles",
-                    type: Type.INFO,
-                }
-                
-            } catch (error) {
-                return {
-                    result: String(error),
-                    title: "Error",
-                    type: Type.WARNING, 
-                }
-            }
+        
 
         default:
+
             return {
-                result: "Commande inconnue: " + command,
                 title: "Erreur",
+                result: "Commande inconnue: " + command,
                 type: Type.WARNING,
             }
 

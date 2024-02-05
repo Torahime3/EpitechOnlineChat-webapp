@@ -52,9 +52,9 @@ function ChatBox({selectedChannel}: Props) {
         
     }, [selectedChannel]);
 
-    async function executeCommand(command: string, args: string[]) {
+    async function executeCommand(command: string, args: string[], userCookie: string) {
 
-        const response = await handleCommand(command, args, selectedChannel) as { result: string, title: string, type: Type};
+        const response = await handleCommand(command, args, selectedChannel, userCookie) as { result: string, title: string, type: Type};
         setMessages(prevMessages => [...prevMessages, { 
             message_title: response.title,
             message_content: response.result,
