@@ -59,7 +59,7 @@ function InputMessage({selectedChannel, executeCommand}: any) {
 
 
     return (
-        <form className={styles.container} onSubmit={handleSubmit}>
+        <form autoComplete="off" className={styles.container} onSubmit={handleSubmit}>
             <input
                 onChange={onInputChange}
                 name="content"

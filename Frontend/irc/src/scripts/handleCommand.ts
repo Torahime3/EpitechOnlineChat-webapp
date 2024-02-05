@@ -1,6 +1,7 @@
 import { Type } from '../components/SystemChat';
 import { listCommand } from './commands/listCommand';
 import { nickCommand } from './commands/nickCommand';
+import { quitCommand } from './commands/quitCommand';
 import { usersCommand } from './commands/usersCommand';
 
 export async function handleCommand(command: string, args: string[], selectedChannel: number, userCookie: string): Promise<{ result: string; title: string; type?: Type | undefined; }> {
@@ -14,6 +15,8 @@ export async function handleCommand(command: string, args: string[], selectedCha
             return nickCommand(args, userCookie);
         case "users":
             return usersCommand(args, selectedChannel, userCookie);
+        case "quit":
+            return quitCommand(args, selectedChannel, userCookie);
 
         
 

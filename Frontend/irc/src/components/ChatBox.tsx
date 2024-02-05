@@ -52,6 +52,11 @@ function ChatBox({selectedChannel}: Props) {
         
     }, [selectedChannel]);
 
+    useEffect(() => {
+        const chatbox = document.querySelector(`.${styles.chatbox}`);
+        chatbox?.scrollTo(0, chatbox.scrollHeight);
+    }, [messages]);
+
     async function executeCommand(command: string, args: string[], userCookie: string) {
 
         const response = await handleCommand(command, args, selectedChannel, userCookie) as { result: string, title: string, type: Type};
@@ -61,7 +66,11 @@ function ChatBox({selectedChannel}: Props) {
             message_type: response.type,
             system_chat: true,
         }]);
+
+
     }
+
+    console.log("composant reload")
 
 
     return (
