@@ -3,7 +3,7 @@ import ChannelsBox from "./components/ChannelsBox.tsx";
 import Authentication from "./components/forms/Authentication.tsx";
 import {useCookies} from "react-cookie";
 import {useEffect, useState} from "react";
-
+import { socket } from "./socket.ts";
 
 function App() {
 
@@ -18,6 +18,10 @@ function App() {
             setIsLoggedIn(false);
         }
     }, [cookie]);
+
+    socket.on('message', (message: any) => {
+        console.log("message");
+    });
 
     return (
         <>

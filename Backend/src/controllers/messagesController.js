@@ -1,6 +1,7 @@
 const MessageModel = require('../models/messages');
 const UserModel = require('../models/users');
 
+
 exports.getAllMessages = async (req, res) => {
     try {
     
@@ -13,6 +14,21 @@ exports.getAllMessages = async (req, res) => {
         res.status(500).json(err);
     }
 };
+
+exports.getMessageById = async (messageId) => {
+
+        const message = await MessageModel.find({ _id: messageId });
+        const sender_id = message[0].sender_id;
+
+        const user = await UserModel.findOne({ _id: sender_id }).select('username').then((user) => user.username);
+        message[0] = {
+            ...message[0]._doc,
+            sender_username: user
+        };
+
+        return message[0];
+
+}
 
 exports.getMessageByChannelId = async (req, res) => {
  
@@ -58,11 +74,20 @@ exports.createMessage = async (req, res) => {
 
         await message.save();
 
+        const clientMessage = await this.getMessageById(message._id);
+        console.log(clientMessage);
+
+        console.log("back event name : " + 'message_' + channelId);
+        req.app.get('socketio').emit('message_' + channelId, {
+            clientMessage
+        });
+
         res.json({
             success: true,
             message: 'Message créé',
             result: message
         });
+
 
     } catch (err) {
         res.status(500).json({

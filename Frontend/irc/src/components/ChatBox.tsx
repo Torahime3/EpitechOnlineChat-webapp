@@ -4,13 +4,14 @@ import Chat from "./Chat.tsx";
 import SystemChat, { Type } from './SystemChat.tsx';
 import InputMessage from "./forms/InputMessage.tsx";
 import {useEffect, useState} from "react";
+import { socket } from "../socket.ts";
 
 interface Props {
     selectedChannel: number;
 }
 function ChatBox({selectedChannel}: Props) {
 
-    const[channelInfo, setChannelInfo] = useState({channel_name: "", channel_description: "", channel_creation_date: ""});
+    const [channelInfo, setChannelInfo] = useState({channel_name: "", channel_description: "", channel_creation_date: ""});
     const [messages, setMessages] = useState<any[]>([]);;
     const [loadingMessages, setLoadingMessages] = useState(true);
     const [helpChannel, setHelpChannel] = useState(false);
@@ -46,9 +47,24 @@ function ChatBox({selectedChannel}: Props) {
             },
         }).then(request => request.json())
             .then((response) => {
+                console.log(response.result);
                 setMessages(response.result);
                 setLoadingMessages(false);
             });
+
+            console.log("Listening to message_" + selectedChannel)
+            socket.on('message_' + selectedChannel, (message: any) => {
+                const message_data = message.clientMessage;
+                setMessages(prevMessages => [...prevMessages, { 
+                    sender_username: message_data.sender_username,
+                    message_content: message_data.message_content,
+                    message_date: message_data.message_date,
+                }]);
+            });
+
+            return () => {
+                socket.off('message');
+            };
         
     }, [selectedChannel]);
 
@@ -70,8 +86,6 @@ function ChatBox({selectedChannel}: Props) {
 
     }
 
-    console.log("composant reload")
-
 
     return (
         <>
@@ -88,19 +102,20 @@ function ChatBox({selectedChannel}: Props) {
     
 
                     {helpChannel ? ( 
-                        
-                        <SystemChat 
-                        title={"Bienvenue"}
-                        message={"Bienvenue sur la discord app\n" +
-                        "Pour commencer veuillez selectionner un salon sur la gauche.\n\n" +
-                        "Liste de commandes : \n" +
-                        "/nick <nickname> : Change votre pseudo\n" +
-                        "/list [string] : Liste des channels disponible, si string est renseigné, liste les channels contenant la string\n" +
-                        "/create <channel> : Crée un channel\n" +
-                        "/join <channel> : Rejoindre un channel\n" +
-                        "/quit : Quitte le channel\n" +
-                        "/msg <user>"} 
-                        type={Type.SUCCESS} />
+                        <div className={styles.message_container}>
+                            <SystemChat 
+                            title={"Bienvenue"}
+                            message={"Bienvenue sur la discord app\n" +
+                            "Pour commencer veuillez selectionner un salon sur la gauche.\n\n" +
+                            "Liste de commandes : \n" +
+                            "/nick <nickname> : Change votre pseudo\n" +
+                            "/list [string] : Liste des channels disponible, si string est renseigné, liste les channels contenant la string\n" +
+                            "/create <channel> : Crée un channel\n" +
+                            "/join <channel> : Rejoindre un channel\n" +
+                            "/quit : Quitte le channel\n" +
+                            "/msg <user>"} 
+                            type={Type.SUCCESS} />
+                        </div>
 
                     ) : ( 
                     

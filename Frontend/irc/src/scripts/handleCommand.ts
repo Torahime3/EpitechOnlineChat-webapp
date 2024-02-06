@@ -1,4 +1,5 @@
 import { Type } from '../components/SystemChat';
+import { joinCommand } from './commands/joinCommand';
 import { listCommand } from './commands/listCommand';
 import { nickCommand } from './commands/nickCommand';
 import { quitCommand } from './commands/quitCommand';
@@ -17,6 +18,8 @@ export async function handleCommand(command: string, args: string[], selectedCha
             return usersCommand(args, selectedChannel, userCookie);
         case "quit":
             return quitCommand(args, selectedChannel, userCookie);
+        case "join":
+            return joinCommand(args, selectedChannel, userCookie);
 
         
 
