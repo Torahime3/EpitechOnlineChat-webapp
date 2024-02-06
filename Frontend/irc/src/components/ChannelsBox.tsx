@@ -27,6 +27,14 @@ function ChannelsBox({ setSelectedChannel, selectedChannel }: Props){
             });
     }, []);
 
+    const addChannel = (channel: any) => {
+        setChannelsList([...channelsList, channel]);
+    }
+
+    const removeChannel = (id: number) => {
+        setChannelsList(channelsList.filter(channel => channel.channel_id !== id));
+    }
+
     const handleChannelClick = (id: number) => {
         setSelectedChannel(id);
     }

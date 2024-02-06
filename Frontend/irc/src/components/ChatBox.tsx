@@ -63,7 +63,7 @@ function ChatBox({selectedChannel}: Props) {
             });
 
             return () => {
-                socket.off('message');
+                socket.off('message_' + selectedChannel);
             };
         
     }, [selectedChannel]);

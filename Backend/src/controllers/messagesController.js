@@ -75,7 +75,6 @@ exports.createMessage = async (req, res) => {
         await message.save();
 
         const clientMessage = await this.getMessageById(message._id);
-        console.log(clientMessage);
 
         console.log("back event name : " + 'message_' + channelId);
         req.app.get('socketio').emit('message_' + channelId, {
