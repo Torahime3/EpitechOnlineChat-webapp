@@ -9,20 +9,28 @@ function App() {
 
     const [cookie] = useCookies(['user']);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [selectedChannel, setSelectedChannel] = useState(-1);
+    const [selectedChannel, setSelectedChannel] = useState({
+        id: -1,
+        channel_name: "",
+        channel_description: "",
+        channel_creation_date: ""
+    });
 
     useEffect(() => {
+
         if (cookie.user && cookie.user.token) {
             setIsLoggedIn(true);
+            socket.emit("login", cookie.user.token);
         } else {
             setIsLoggedIn(false);
         }
+
+        return () => {
+            socket.off("login");
+        }
     }, [cookie]);
 
-    socket.on('message', (message: any) => {
-        console.log("message");
-    });
-
+    console.log(selectedChannel);
     return (
         <>
             {!isLoggedIn ? (

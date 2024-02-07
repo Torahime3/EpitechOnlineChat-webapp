@@ -1,7 +1,7 @@
 import { Type } from '../../components/SystemChat';
 
 
-export async function listCommand(args: string[], selectedChannel: number){
+export async function listCommand(args: string[], selectedChannel: any){
 
     try {
         const response = await fetch("api/v1/channels", {
@@ -16,9 +16,9 @@ export async function listCommand(args: string[], selectedChannel: number){
         if(args.length > 0){
             // If the user has entered an argument, we will filter the channels
             const filteredChannels = channels.filter((channel: any) => channel.channel_name.includes(args[0]));
-            channelNames = String(filteredChannels.map((channel: any) => " - # " + channel.channel_name + (channel._id === selectedChannel ? " (Actuel)" : "")).join("\n"));
+            channelNames = String(filteredChannels.map((channel: any) => " - # " + channel.channel_name + (channel._id === selectedChannel.id ? " (Actuel)" : "")).join("\n"));
         } else {
-            channelNames = String(channels.map((channel: any) => " - # " + channel.channel_name + (channel._id === selectedChannel ? " (Actuel)" : "")).join("\n"));
+            channelNames = String(channels.map((channel: any) => " - # " + channel.channel_name + (channel._id === selectedChannel.id ? " (Actuel)" : "")).join("\n"));
         }
         
         return {

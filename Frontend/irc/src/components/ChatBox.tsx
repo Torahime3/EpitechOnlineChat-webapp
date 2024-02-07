@@ -5,9 +5,10 @@ import SystemChat, { Type } from './SystemChat.tsx';
 import InputMessage from "./forms/InputMessage.tsx";
 import {useEffect, useState} from "react";
 import { socket } from "../socket.ts";
+import ReactLoading from 'react-loading';
 
 interface Props {
-    selectedChannel: number;
+    selectedChannel: any;
 }
 function ChatBox({selectedChannel}: Props) {
 
@@ -17,54 +18,42 @@ function ChatBox({selectedChannel}: Props) {
     const [helpChannel, setHelpChannel] = useState(false);
 
     useEffect(() => {
-
-
-        if(selectedChannel === -1){
+        if(selectedChannel.id === -1){
             setHelpChannel(true);
             return;
         }
-
+        
         setHelpChannel(false);
         setMessages([]);
         setLoadingMessages(true);
-
-        // FETCH CHANNELS INFO
-        fetch("api/v1/channels/" + selectedChannel, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        }).then(request => request.json())
-            .then((response) => {
-                setChannelInfo(response)
-            });
+        setChannelInfo(selectedChannel);
 
         // FETCH MESSAGES INFO
-        fetch("api/v1/messages/" + selectedChannel, {
+        fetch("api/v1/messages/" + selectedChannel.id, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
             },
         }).then(request => request.json())
             .then((response) => {
-                console.log(response.result);
                 setMessages(response.result);
                 setLoadingMessages(false);
             });
 
-            console.log("Listening to message_" + selectedChannel)
-            socket.on('message_' + selectedChannel, (message: any) => {
-                const message_data = message.clientMessage;
-                setMessages(prevMessages => [...prevMessages, { 
-                    sender_username: message_data.sender_username,
-                    message_content: message_data.message_content,
-                    message_date: message_data.message_date,
-                }]);
-            });
+        socket.on('message_' + selectedChannel.id, (message: any) => {
+            const message_data = message.clientMessage;
+            setMessages(prevMessages => [...prevMessages, { 
+                sender_id: {
+                    username: message_data.sender_username,
+                },
+                message_content: message_data.message_content,
+                message_date: message_data.message_date,
+            }]);
+        });
 
-            return () => {
-                socket.off('message_' + selectedChannel);
-            };
+        return () => {
+            socket.off('message_' + selectedChannel.id);
+        };
         
     }, [selectedChannel]);
 
@@ -111,6 +100,7 @@ function ChatBox({selectedChannel}: Props) {
                             "/nick <nickname> : Change votre pseudo\n" +
                             "/list [string] : Liste des channels disponible, si string est renseigné, liste les channels contenant la string\n" +
                             "/create <channel> : Crée un channel\n" +
+                            "/users : Liste les utilisateurs dans le channel\n" +
                             "/join <channel> : Rejoindre un channel\n" +
                             "/quit : Quitte le channel\n" +
                             "/msg <user>"} 
@@ -120,7 +110,11 @@ function ChatBox({selectedChannel}: Props) {
                     ) : ( 
                     
                         loadingMessages ? (
-                            <> </>
+                            <> 
+                            <div className={styles.empty_channel}>
+                                <ReactLoading type={"spin"}/>
+                            </div>
+                            </>
                         ) : messages.length === 0 ? (
                             <div className={styles.empty_channel}>
                                 <div className={styles.empty_face}> </div>
@@ -138,7 +132,7 @@ function ChatBox({selectedChannel}: Props) {
                                     ) : ( 
                                         <Chat
                                         key={message.id}
-                                        sender={message.sender_username}
+                                        sender={message.sender_id.username}
                                         time={message.message_date}
                                         message={message.message_content}
                                     />
@@ -149,7 +143,7 @@ function ChatBox({selectedChannel}: Props) {
                             ))
                         )
                     
-                    ) }
+                    )}
 
                 </div>
                 

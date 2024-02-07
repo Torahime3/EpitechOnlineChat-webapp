@@ -1,6 +1,15 @@
 //Constante permettant de récupérer le model des users
 const UserModel = require('../models/users');
 
+exports.setUserStatus = (setConnected, userToken) => {
+    // console.log("connected: " + setConnected + " token: " + userToken);
+    UserModel.updateOne({token: userToken}, {connected: setConnected}).then(() => {
+        // console.log('User status updated');
+    }).catch(err => {
+        console.log(err);
+    });
+}
+
 exports.loginUser = async (req, res) => {
     let username = req.body.username;
     let password = req.body.password;

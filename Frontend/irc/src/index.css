@@ -2,6 +2,8 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
     font: 14px sans-serif;
     color: #c5c5c5;
 }
@@ -12,6 +14,46 @@
 
 .separator{
     display: flex;
+}
+
+.member_container{
+    display: flex;
+    align-items: center;
+}
+
+.member_container {
+    /* border: 2px solid transparent; */
+    margin: 5px 10px 0 10px;
+    padding: 5px 5px;
+    border-radius: 5px;
+    font-size: 15px;
+}
+
+.member_container:hover{
+    /* border: 2px solid #2c508f; */
+    cursor: pointer;
+}
+
+.member_container p:hover{
+    color: #fff;
+}
+
+.status_dot{
+    background-color: whiteZ;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.connected {
+    background-color: #2c8f2c;
+
+}
+
+.disconnected {
+    background-color: #8f2c2c
+    
 }
 
 .channel_container p {

@@ -1,4 +1,5 @@
 import { Type } from '../components/SystemChat';
+import { helpCommand } from './commands/helpCommand';
 import { joinCommand } from './commands/joinCommand';
 import { listCommand } from './commands/listCommand';
 import { nickCommand } from './commands/nickCommand';
@@ -10,18 +11,19 @@ export async function handleCommand(command: string, args: string[], selectedCha
 
     switch (command) {
 
+        case "help":
+            return helpCommand();
         case "list":
             return listCommand(args, selectedChannel);
         case "nick":
             return nickCommand(args, userCookie);
         case "users":
-            return usersCommand(args, selectedChannel, userCookie);
+            return usersCommand(selectedChannel);
         case "quit":
             return quitCommand(args, selectedChannel, userCookie);
         case "join":
-            return joinCommand(args, selectedChannel, userCookie);
+            return joinCommand(args, userCookie);
 
-        
 
         default:
 

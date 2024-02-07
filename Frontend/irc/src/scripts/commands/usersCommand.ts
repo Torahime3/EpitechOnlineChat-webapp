@@ -1,9 +1,9 @@
 import { Type } from '../../components/SystemChat';
 
-export async function usersCommand(args: string[], selectedChannel: number, userCookie: string){
+export async function usersCommand(selectedChannel: any){
 
     try {
-        const response = await fetch("api/v1/userChannels/channel/" + selectedChannel, {
+        const response = await fetch("api/v1/userChannels/channel/" + selectedChannel.id, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -12,7 +12,7 @@ export async function usersCommand(args: string[], selectedChannel: number, user
         const users = await response.json();
 
         let usernames = "";
-        usernames = String(users.map((user: any) => " - " + user.username).join("\n"));
+        usernames = String(users.map((user: any) => " - " + user.user_id.username).join("\n"));
         
     
         return {

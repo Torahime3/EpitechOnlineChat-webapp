@@ -20,9 +20,16 @@ const UserSchema = new mongoose.Schema({
         type: Number,
         required: true,
         default: 0
+    },
+    connected: {
+        type: Boolean,
+        required: true,
+        default: false
     }
 })
 
+UserSchema.index({ username: 1 }); // Index ascendant sur le champ username
+UserSchema.index({ token: 1 }, { unique: true });
 
 const UserModel = mongoose.model("users", UserSchema)
 module.exports = UserModel;

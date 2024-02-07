@@ -28,7 +28,7 @@ function InputMessage({selectedChannel, executeCommand}: any) {
             message_content: messageContent,
         };
 
-        fetch("api/v1/messages/" + selectedChannel, {
+        fetch("api/v1/messages/" + selectedChannel.id, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -67,6 +67,7 @@ function InputMessage({selectedChannel, executeCommand}: any) {
                 type="text"
                 placeholder="Entrez votre message"
                 value={messageContent}
+                disabled={false}
             />
             <button name="submit" className={styles.submit_input} type="submit">➤</button>
         </form>

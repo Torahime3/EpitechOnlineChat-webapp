@@ -21,7 +21,9 @@ require('dotenv').config()
 
 //BDD Connect
 const mongoose = require('mongoose')
-mongoose.connect(process.env.DB_URL).then(() => console.log("Connection to database succeed")).catch(err => console.log(err))
+mongoose.connect(process.env.DB_URL , { 
+  autoIndex: true, // Crée automatiquement les index définis dans le schéma
+}).then(() => console.log("Connection to database succeed")).catch(err => console.log(err))
 
 //Routes
 const userRoutes = require('./routes/usersRoutes');
@@ -29,14 +31,15 @@ const channelRoute = require('./routes/channelsRoutes')
 const privateMessageRoutes = require('./routes/privateMessageRoutes');
 const messagesRoutes = require('./routes/messagesRoutes');
 const userChannels = require('./routes/userChannelsRoutes');
+const { setUserStatus } = require('./controllers/usersController');
 
 
 
 //logger
-app.use((req, res, next) => {
-  console.log(`${req.method} ${req.url}`)
-  next()
-})
+// app.use((req, res, next) => {
+//   console.log(`${req.method} ${req.url}`)
+//   next()
+// })
 
 //Middleware
 app.use(bodyParser.json());
@@ -51,10 +54,25 @@ app.use('/api/v1/messages', messagesRoutes);
 app.use('/api/v1/userChannels', userChannels);
 
 io.on('connection', (socket) => {
-  console.log('user connected');
-  socket.on('disconnect', function () {
-    console.log('user disconnected');
+
+  socket.on('login', (data) => {
+    console.log('user connected');
+    setUserStatus(true, data);
   });
+
+  socket.on('logout', (data) => {
+    console.log('user logout');
+    setUserStatus(false, data);
+
+    socket.on('disconnect', () => {
+      console.log('user disconnected');
+      setUserStatus(false, data);
+    });
+  });
+
+  // socket.on('disconnect', (data) => {
+  //   console.log('user disconnected');
+  // });
 })
 
 server.listen(PORT, HOST, () => {

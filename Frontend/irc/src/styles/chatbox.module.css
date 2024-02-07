@@ -14,6 +14,13 @@
     background-color: #353942;
 }
 
+.loading{
+    margin: 5px;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #21252b;
+    width: fit-content;
+}
 
 .empty_channel{
     display: flex;
@@ -28,7 +35,6 @@
     margin-top: 30px;
     font-weight: bold;
     font-size: large;
-    color:
 }
 
 

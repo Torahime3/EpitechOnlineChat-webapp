@@ -15,41 +15,20 @@ exports.getAllMessages = async (req, res) => {
     }
 };
 
-exports.getMessageById = async (messageId) => {
-
-        const message = await MessageModel.find({ _id: messageId });
-        const sender_id = message[0].sender_id;
-
-        const user = await UserModel.findOne({ _id: sender_id }).select('username').then((user) => user.username);
-        message[0] = {
-            ...message[0]._doc,
-            sender_username: user
-        };
-
-        return message[0];
-
-}
 
 exports.getMessageByChannelId = async (req, res) => {
  
 
     try {
         const channelId = req.params.channelId;
-        const messages = await MessageModel.find({ channel_id: channelId });
-        
-        for (let i = 0; i < messages.length; i++) {
-            const message = messages[i];
-            const user = await UserModel.findOne({ _id: message.sender_id }).select('username').then((user) => user.username);
-            messages[i] = {
-                ...message._doc,
-                sender_username: user
-            };
-        }
-
+        const messages = await MessageModel.find({ channel_id: channelId })
+            .populate('sender_id', 'username');
+    
         res.json({
             success: true,
             result: messages
         });
+
 
     } catch (err) {
         res.status(500).json({
@@ -58,6 +37,20 @@ exports.getMessageByChannelId = async (req, res) => {
         });
     }
 };
+
+exports.getMessageById = async (messageId) => {
+
+    const message = await MessageModel.find({ _id: messageId });
+    const sender_id = message[0].sender_id;
+
+    const user = await UserModel.findOne({ _id: sender_id }).select('username').then((user) => user.username);
+    message[0] = {
+        ...message[0]._doc,
+        sender_username: user
+    };
+
+    return message[0];
+}
 
 exports.createMessage = async (req, res) => {
     try {
@@ -76,7 +69,6 @@ exports.createMessage = async (req, res) => {
 
         const clientMessage = await this.getMessageById(message._id);
 
-        console.log("back event name : " + 'message_' + channelId);
         req.app.get('socketio').emit('message_' + channelId, {
             clientMessage
         });

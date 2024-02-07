@@ -16,13 +16,21 @@ const messageSchema = new mongoose.Schema({
         default: Date.now,
         required: true,
     },
-
     channel_id: {
         type: String,
         ref: 'channels',
         required: true,
     },
+    system_chat: {
+        type: Boolean,
+        default: false,
+        required: true,
+    },
 });
+
+messageSchema.index({ sender_id: 1 }); // Index ascendant sur sender_id
+messageSchema.index({ message_date: -1 }); // Index descendant sur message_date
+messageSchema.index({ channel_id: 1 });
 
 const MessageModel = mongoose.model('messages', messageSchema)
 module.exports = MessageModel;
