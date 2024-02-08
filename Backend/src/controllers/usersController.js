@@ -1,10 +1,9 @@
 //Constante permettant de récupérer le model des users
 const UserModel = require('../models/users');
 
-exports.setUserStatus = (setConnected, userToken) => {
-    // console.log("connected: " + setConnected + " token: " + userToken);
-    UserModel.updateOne({token: userToken}, {connected: setConnected}).then(() => {
-        // console.log('User status updated');
+exports.setUserStatus = (setConnected, userToken, app) => {
+    UserModel.updateOne({token: userToken}, {connected: setConnected}).then(async () => {
+        await app.get('socketio').emit('members')
     }).catch(err => {
         console.log(err);
     });
@@ -52,6 +51,13 @@ exports.getUserById = async (req, res) => {
 
 };
 
+exports.loginAsAnonymousUser = async (req, res) => {
+    const username = 'Anonymous' + Math.floor(Math.random() * 100000);
+    const password = require('crypto').randomBytes(16).toString('hex');
+
+    this.createUser({body: {username: username, password: password}}, res);
+}
+
 exports.createUser = async (req, res) => {
     let username = req.body.username;
     let password = req.body.password;
@@ -74,10 +80,14 @@ exports.createUser = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
 
-    const result = await UserModel.updateOne({_id: req.params.id}, req.body).catch(err => {
+    const result = await UserModel.updateOne({_id: req.params.id}, req.body).then(() => {
+        req.app.get('socketio').emit('members')
+    })
+    .catch(err => {
         res.status(500).json(err);
     });
 
+    
     res.json({
         success: true,
         message: 'User updated',

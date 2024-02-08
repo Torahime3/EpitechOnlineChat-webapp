@@ -16,13 +16,15 @@ const randomString = (length) => {
     return result;
 }
 
-// async function createChannels(number){
-//     for (let i = 0; i < number; i++) {
-//         const newChannel = await new ChannelsModel({
-//             channel_name: randomString(10),
-//             channel_description: randomString(15)
-//         })
-//         newChannel.save()
+async function createChannels(number){
+    for (let i = 0; i < number; i++) {
+        const newChannel = await new ChannelsModel({
+            channel_name: randomString(10),
+            channel_description: randomString(15)
+        })
+        newChannel.save()
+    }
+}
 
 //         //Create message for the channel
 //         for (let i = 0; i < 250; i++) {
@@ -54,5 +56,6 @@ async function fillMessage(channelId, messageNumber){
 
 
 // createChannels(10)
-fillMessage("65c256729bbc9bf66082b8f6", 10000)
+// fillMessage("65c256729bbc9bf66082b8f6", 10000)
+createChannels(10)
 

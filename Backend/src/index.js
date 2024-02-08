@@ -55,18 +55,18 @@ app.use('/api/v1/userChannels', userChannels);
 
 io.on('connection', (socket) => {
 
-  socket.on('login', (data) => {
+  socket.on('login', (token) => {
     console.log('user connected');
-    setUserStatus(true, data);
+    setUserStatus(true, token, app);
   });
 
-  socket.on('logout', (data) => {
+  socket.on('logout', (token) => {
     console.log('user logout');
-    setUserStatus(false, data);
+    setUserStatus(false, token, app) ;
 
     socket.on('disconnect', () => {
       console.log('user disconnected');
-      setUserStatus(false, data);
+      setUserStatus(false, token, app);
     });
   });
 

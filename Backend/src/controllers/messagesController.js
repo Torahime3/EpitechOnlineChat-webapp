@@ -38,36 +38,26 @@ exports.getMessageByChannelId = async (req, res) => {
     }
 };
 
-exports.getMessageById = async (messageId) => {
-
-    const message = await MessageModel.find({ _id: messageId });
-    const sender_id = message[0].sender_id;
-
-    const user = await UserModel.findOne({ _id: sender_id }).select('username').then((user) => user.username);
-    message[0] = {
-        ...message[0]._doc,
-        sender_username: user
-    };
-
-    return message[0];
-}
-
 exports.createMessage = async (req, res) => {
     try {
 
         const sender_id = req.body.user_id;
         const message_content = req.body.message_content;
+        const system_chat = req.body.system_chat ? req.body.system_chat : false;
         const channelId = req.params.channelId;
 
         const message = new MessageModel({
             sender_id: sender_id,
             message_content: message_content,
-            channel_id: channelId
+            channel_id: channelId,
+            system_chat: system_chat
         });
 
+        // console.log(message);
         await message.save();
 
-        const clientMessage = await this.getMessageById(message._id);
+        const clientMessage = await MessageModel.find({ _id: message._id }).populate('sender_id', 'username');
+        console.log(clientMessage)
 
         req.app.get('socketio').emit('message_' + channelId, {
             clientMessage

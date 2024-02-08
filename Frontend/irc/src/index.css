@@ -48,12 +48,13 @@
 
 .connected {
     background-color: #2c8f2c;
+    box-shadow: 0 0 10px #2c8f2c;
 
 }
 
 .disconnected {
-    background-color: #8f2c2c
-    
+    background-color: #8f2c2c;
+    /* box-shadow: 0 0 10px #8f2c2c; */
 }
 
 .channel_container p {

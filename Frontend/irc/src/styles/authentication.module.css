@@ -20,6 +20,10 @@
     font-size: 20px;
 }
 
+.label {
+    margin-left: 10px;
+}
+
 .input {
     width: 100%;
     padding: 10px;
@@ -31,9 +35,20 @@
 
 .submit {
     background-color: #1E90FF;
+    color: white;
+}
+
+.anonymous{
+    background-color: #4e5668;
+    color: white;
 }
 
 .submit:hover {
     background-color: #47a3ff;
     cursor: pointer;
+}
+
+.anonymous:hover{
+    background-color: #686f82;
+    color: white;
 }

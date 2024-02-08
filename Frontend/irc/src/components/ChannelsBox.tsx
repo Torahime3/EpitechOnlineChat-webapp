@@ -19,10 +19,10 @@ function ChannelsBox({ setSelectedChannel, selectedChannel }: Props){
     const[membersList, setMembersList] = useState<any[]>([]);
 
     useEffect(() => {
-        getChannels();
+        fetchChannels();
 
         socket.on('channel_' + cookie.user._id, () => {
-            getChannels();
+            fetchChannels();
         });
 
         return () => {
@@ -32,17 +32,27 @@ function ChannelsBox({ setSelectedChannel, selectedChannel }: Props){
     }, []);
 
     useEffect(() => {
+        console.log("selectedChannel.id: " + selectedChannel.id)
         if(selectedChannel.id === -1){
             setMembersList([]);
             return;
         }
 
-        getMembers();
+        fetchMembers();
+        const handleMembersEvent = () => {
+            fetchMembers();
+        };
+    
+        socket.on('members', handleMembersEvent);
+    
+        return () => {
+            socket.off('members', handleMembersEvent);
+        };
 
-    }, [selectedChannel]);
+    }, [socket, selectedChannel]);
 
-    const getMembers = () => {
-        // console.log("get members on channel: ", selectedChannel.id)
+    const fetchMembers = () => {
+        console.log(cookie.user.username);
         fetch("api/v1/userChannels/channel/" + selectedChannel.id, {
             method: "GET",
             headers: {
@@ -51,10 +61,11 @@ function ChannelsBox({ setSelectedChannel, selectedChannel }: Props){
         }).then(request => request.json())
             .then((response) => {
                 setMembersList(response);
+                console.log(response);
             });
     }
 
-    const getChannels = () => {
+    const fetchChannels = () => {
         fetch("api/v1/userChannels/" + cookie.user._id, {
             method: "GET",
             headers: {
@@ -90,12 +101,16 @@ function ChannelsBox({ setSelectedChannel, selectedChannel }: Props){
             <div className={`${styles.container}`}>
                 <div className={`${styles.channelsbox}`}>
                     <div className={styles.title}>
-                        <p>Channels | {channelsList.length} </p>
+                        <p>Channel{channelsList.length > 1 ? "s" : "" } | {channelsList.length} </p>
                     </div>
 
-                   
-                    <div className={`${styles.scroll}`}>
-                        {channelsList.map((channel, id) => (
+                    <div className={`${styles.panel}`}>
+                        <button className={`${styles.create}`}>+ Ajouter un channel</button>
+                        <button className={`${styles.join}`}>+ Rejoindre un channel</button>
+
+                    </div>
+
+                    {channelsList.map((channel, id) => (
                             <div onClick={() => handleChannelClick(channel)} key={id}>
                                 <Channel
                                     name={channel.channel_id.channel_name}
@@ -104,12 +119,11 @@ function ChannelsBox({ setSelectedChannel, selectedChannel }: Props){
                                 />
                             </div>
                         ))}
-                    </div>
 
                 </div>
                 <div className={`${styles.membersbox}`}>
                     <div className={styles.title}>
-                        <p>Membres | {membersList.length} </p>
+                        <p>Membre{membersList.length > 1 ? "s" : ""} | {membersList.length} </p>
                     </div>
 
                     <div className={`${styles.scroll}`}>
@@ -124,7 +138,10 @@ function ChannelsBox({ setSelectedChannel, selectedChannel }: Props){
 
                 <div className={`${styles.profile} ${styles.panel}`}>
                     <Profile name={cookie.user.username}/>
-                    <button className={`${styles.logout}`} onClick={() => handleLogout()}>Logout</button>
+                    <div>
+                        <button className={`${styles.rename}`}></button>
+                        <button className={`${styles.logout}`} onClick={() => handleLogout()}></button>
+                    </div>
                 </div>
             </div>
         </>

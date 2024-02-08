@@ -23,6 +23,8 @@ function InputMessage({selectedChannel, executeCommand}: any) {
             return;
         }
 
+        if(selectedChannel === -1) return;
+
         const message = {
             user_id: cookie.user._id,
             message_content: messageContent,

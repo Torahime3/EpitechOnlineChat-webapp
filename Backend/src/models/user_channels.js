@@ -13,5 +13,7 @@ const UserChannelSchema = new mongoose.Schema({
     },
 })
 
+UserChannelSchema.index({channel_id: 1, user_id: 1}, {unique: true})
+
 const UserChannelModel = mongoose.model("userchannels", UserChannelSchema)
 module.exports = UserChannelModel;

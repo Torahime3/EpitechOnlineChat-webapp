@@ -30,7 +30,6 @@ function App() {
         }
     }, [cookie]);
 
-    console.log(selectedChannel);
     return (
         <>
             {!isLoggedIn ? (

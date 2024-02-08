@@ -15,17 +15,33 @@ function ChatBox({selectedChannel}: Props) {
     const [channelInfo, setChannelInfo] = useState({channel_name: "", channel_description: "", channel_creation_date: ""});
     const [messages, setMessages] = useState<any[]>([]);;
     const [loadingMessages, setLoadingMessages] = useState(true);
-    const [helpChannel, setHelpChannel] = useState(false);
 
     useEffect(() => {
+
+        setMessages([]);
+        setLoadingMessages(true);
+
         if(selectedChannel.id === -1){
-            setHelpChannel(true);
+            setLoadingMessages(false);
+            setMessages(prevMessages => [...prevMessages, { 
+                message_title: "Bienvenue",
+                message_content: "Bienvenue sur la discord app\n" +
+                "Pour commencer veuillez selectionner un salon sur la gauche.\n\n" +
+                "Liste de commandes : \n" +
+                "/nick <nickname> : Change votre pseudo\n" +
+                "/list [string] : Liste des channels disponible, si string est renseigné, liste les channels contenant la string\n" +
+                "/create <channel> : Crée un channel\n" +
+                "/users : Liste les utilisateurs dans le channel\n" +
+                "/join <channel> : Rejoindre un channel\n" +
+                "/quit : Quitte le channel\n" +
+                "/msg <user>",
+                message_type: Type.SUCCESS,
+                system_chat: true,
+            }]);
+            console.log(messages)
             return;
         }
         
-        setHelpChannel(false);
-        setMessages([]);
-        setLoadingMessages(true);
         setChannelInfo(selectedChannel);
 
         // FETCH MESSAGES INFO
@@ -40,14 +56,16 @@ function ChatBox({selectedChannel}: Props) {
                 setLoadingMessages(false);
             });
 
+        //GET LIVE MESSAGES
         socket.on('message_' + selectedChannel.id, (message: any) => {
-            const message_data = message.clientMessage;
+            const message_data = message.clientMessage[0];
             setMessages(prevMessages => [...prevMessages, { 
                 sender_id: {
-                    username: message_data.sender_username,
+                    username: message_data.sender_id.username,
                 },
                 message_content: message_data.message_content,
                 message_date: message_data.message_date,
+                system_chat: message_data.system_chat,
             }]);
         });
 
@@ -72,7 +90,6 @@ function ChatBox({selectedChannel}: Props) {
             system_chat: true,
         }]);
 
-
     }
 
 
@@ -87,29 +104,8 @@ function ChatBox({selectedChannel}: Props) {
                         <span> [#{channelInfo.channel_name}] </span>
                         <span>{channelInfo.channel_description}</span>
                     </div>
-
-    
-
-                    {helpChannel ? ( 
-                        <div className={styles.message_container}>
-                            <SystemChat 
-                            title={"Bienvenue"}
-                            message={"Bienvenue sur la discord app\n" +
-                            "Pour commencer veuillez selectionner un salon sur la gauche.\n\n" +
-                            "Liste de commandes : \n" +
-                            "/nick <nickname> : Change votre pseudo\n" +
-                            "/list [string] : Liste des channels disponible, si string est renseigné, liste les channels contenant la string\n" +
-                            "/create <channel> : Crée un channel\n" +
-                            "/users : Liste les utilisateurs dans le channel\n" +
-                            "/join <channel> : Rejoindre un channel\n" +
-                            "/quit : Quitte le channel\n" +
-                            "/msg <user>"} 
-                            type={Type.SUCCESS} />
-                        </div>
-
-                    ) : ( 
                     
-                        loadingMessages ? (
+                        {loadingMessages ? (
                             <> 
                             <div className={styles.empty_channel}>
                                 <ReactLoading type={"spin"}/>
@@ -141,9 +137,7 @@ function ChatBox({selectedChannel}: Props) {
 
                                 </div>
                             ))
-                        )
-                    
-                    )}
+                        )}
 
                 </div>
                 

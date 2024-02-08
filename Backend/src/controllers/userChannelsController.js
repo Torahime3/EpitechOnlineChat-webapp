@@ -1,6 +1,8 @@
 const UserChannelModel = require('../models/user_channels');
 const UserModel = require('../models/users');
 const ChannelModel = require('../models/channels');
+const MessageModel = require('../models/messages');
+const { createMessage } = require('./messagesController');
 
 exports.getAllUserChannels = async (req, res) => {
     const userChannels = await UserChannelModel.find();
@@ -46,13 +48,18 @@ exports.addUserToChannel = async (req, res) => {
         return;
     }
 
-    userChannel.save().then(function(){
+    userChannel.save().then(async function(){
 
-        req.app.get('socketio').emit('channel_' + userId, {
+        sendConnexionMessage(req, userId, channelId, true);
+
+        await req.app.get('socketio').emit('channel_' + userId, {
             userChannel
         });
 
-        res.status(200).json(userChannel)
+        await req.app.get('socketio').emit('members')
+        
+        res.status(200).json(userChannel);
+
     }).catch(function(err){
         res.status(500).json(err);
     });
@@ -67,13 +74,37 @@ exports.removeUserFromChannel = async (req, res) => {
     await UserChannelModel.findOneAndDelete({
         user_id: userId,
         channel_id: channelId
-    }).then(function(){
+    }).then(async function(){
+
+        sendConnexionMessage(req, userId, channelId, false);
+
         req.app.get('socketio').emit('channel_' + userId, {
             userChannel: null
         });
+        
+        req.app.get('socketio').emit('members')
         res.status(200).json({message: "User removed from channel"});
+
+
     }).catch(function(err){
         res.status(500).json(err);
     });
 
 }
+
+const sendConnexionMessage = async (req, userId, channelId, join) => {
+
+    const username = await UserModel.findOne({_id: userId}).select('username').then(username => { return username.username });
+        const message = new MessageModel({
+            sender_id: userId,
+            message_content: username + " a " + (join ? " rejoint " : " quitté ") + "le channel",
+            channel_id: channelId,
+            system_chat: true,
+        });
+        await message.save();
+
+        const clientMessage = await MessageModel.find({ _id: message._id }).populate('sender_id', 'username');
+        req.app.get('socketio').emit('message_' + channelId, {
+            clientMessage
+        });
+    }

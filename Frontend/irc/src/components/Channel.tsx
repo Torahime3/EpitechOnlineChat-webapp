@@ -12,6 +12,9 @@ function Channel(props: Props){
     return (
         <div className={style}>
             <p>{props.name}</p>
+            <div className="icon">
+                
+            </div>
         </div>
     )
 }

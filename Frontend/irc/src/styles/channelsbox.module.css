@@ -1,11 +1,50 @@
 
 .container{
     width: clamp(100px, 100%, 300px);
+
+}
+
+.create {
+    margin: 5px 5px;;
+    border-radius: 5px;
+    padding: 5px 0 5px 0;
+    border: 1px solid #396637;
+    color: rgb(185, 185, 185);
+    width: 90%;
+    background-color: transparent;
+    font-size: 13px;
+    font-weight: bold;
+    transition: background-color 0.1s;
+}
+
+
+.create:hover{
+    background-color: #3e683b;
+    cursor: pointer;
+}
+
+.join {
+    margin: 5px 5px;;
+    border-radius: 5px;
+    padding: 5px 0 5px 0;
+    border: 1px solid #1E90FF;
+    color: rgb(185, 185, 185);
+    width: 90%;
+    background-color: transparent;
+    font-size: 13px;
+    font-weight: bold;
+    transition: background-color 0.1s;
+}
+
+.join:hover {
+    background-color: #1E90FF;
+    cursor: pointer;
 }
 
 .channelsbox{
     height: 45%;
     background-color: #21252b;
+    overflow-y: scroll;
 }
 
 .scroll{
@@ -16,6 +55,7 @@
 .membersbox{
     height: 45%;
     background-color: #21252b;
+    overflow-y: scroll;
 }
 
 .profile{
@@ -40,12 +80,39 @@
 .logout {
     color: white;
     cursor: pointer;
-    background-color: #5e5e5e;
+    background-color: #8f2c2c;
     border: none;
     border-radius: 4px;
     padding: 5px;
+    background-image: url(../assets/disconnect.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 20px;
+    width: 30px;
+    height: 30px;
+}
+
+.rename {
+    color: white;
+    cursor: pointer;
+    background-color: rgb(66, 66, 66);
+    border: none;
+    border-radius: 4px;
+    padding: 5px;
+    background-image: url(../assets/plume.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 20px;
+    width: 30px;
+    height: 30px;
+    margin-right: 5px;
+
 }
 
 .logout:hover{
-    background-color: #7d7d7d;
+    background-color: #9e3333;
+}
+
+.rename:hover{
+    background-color: #4c4c4c;
 }
