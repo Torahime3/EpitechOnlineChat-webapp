@@ -23,5 +23,9 @@ const privateMessageSchema = new mongoose.Schema({
     },
 });
 
+privateMessageSchema.index({ sender_id: 1 });
+privateMessageSchema.index({ pm_message_date: -1 });
+privateMessageSchema.index({ target_id: 1 });
+
 const PrivateMessage = mongoose.model('privatemessage', privateMessageSchema)
 module.exports = PrivateMessage;

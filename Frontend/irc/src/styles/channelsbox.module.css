@@ -8,7 +8,7 @@
     margin: 5px 5px;;
     border-radius: 5px;
     padding: 5px 0 5px 0;
-    border: 1px solid #396637;
+    border: 1px solid #467d37;
     color: rgb(185, 185, 185);
     width: 90%;
     background-color: transparent;
@@ -19,7 +19,7 @@
 
 
 .create:hover{
-    background-color: #3e683b;
+    background-color: #467d37;
     cursor: pointer;
 }
 
@@ -27,7 +27,7 @@
     margin: 5px 5px;;
     border-radius: 5px;
     padding: 5px 0 5px 0;
-    border: 1px solid #1E90FF;
+    border: 1px solid #2c508f;
     color: rgb(185, 185, 185);
     width: 90%;
     background-color: transparent;
@@ -37,7 +37,7 @@
 }
 
 .join:hover {
-    background-color: #1E90FF;
+    background-color: #2c508f;;
     cursor: pointer;
 }
 

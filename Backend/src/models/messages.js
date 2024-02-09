@@ -28,8 +28,8 @@ const messageSchema = new mongoose.Schema({
     },
 });
 
-messageSchema.index({ sender_id: 1 }); // Index ascendant sur sender_id
-messageSchema.index({ message_date: -1 }); // Index descendant sur message_date
+messageSchema.index({ sender_id: 1 }); 
+messageSchema.index({ message_date: -1 }); 
 messageSchema.index({ channel_id: 1 });
 
 const MessageModel = mongoose.model('messages', messageSchema)

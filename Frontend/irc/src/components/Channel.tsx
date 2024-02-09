@@ -13,7 +13,7 @@ function Channel(props: Props){
         <div className={style}>
             <p>{props.name}</p>
             <div className="icon">
-                
+                <button>X</button>
             </div>
         </div>
     )

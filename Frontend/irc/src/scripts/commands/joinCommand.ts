@@ -1,5 +1,4 @@
 import { Type } from '../../components/SystemChat';
-import { socket } from '../../socket';
 
 export async function joinCommand(args: string[], userCookie: string){
 

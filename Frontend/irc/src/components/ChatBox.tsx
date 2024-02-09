@@ -124,7 +124,7 @@ function ChatBox({selectedChannel}: Props) {
                                         <SystemChat 
                                         title={message.message_title}
                                         message={message.message_content} 
-                                        type={message.message_type} />
+                                        type={message.message_type}  />
                                     ) : ( 
                                         <Chat
                                         key={message.id}

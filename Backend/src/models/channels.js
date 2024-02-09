@@ -16,5 +16,7 @@ const ChannelSchema = new mongoose.Schema({
     },
 })
 
+ChannelSchema.index({ channel_name: 1 }, { unique: true })
+
 const ChannelModel = mongoose.model("channels", ChannelSchema)
 module.exports = ChannelModel;

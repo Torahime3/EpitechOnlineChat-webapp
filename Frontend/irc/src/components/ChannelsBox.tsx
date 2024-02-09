@@ -104,8 +104,8 @@ function ChannelsBox({ setSelectedChannel, selectedChannel }: Props){
                         <p>Channel{channelsList.length > 1 ? "s" : "" } | {channelsList.length} </p>
                     </div>
 
-                    <div className={`${styles.panel}`}>
-                        <button className={`${styles.create}`}>+ Ajouter un channel</button>
+                    <div>
+                        <button className={`${styles.create}`}>+ Créer un channel</button>
                         <button className={`${styles.join}`}>+ Rejoindre un channel</button>
 
                     </div>
