@@ -1,4 +1,4 @@
-# Epitech-Online-Chat (T-JSF-600-TLS_6)
+# Epitech-Online-Chat (T-JSF-600-TLS_6) (WIP)
 
 ## Introduction 📖
 The aim of this project is to create an online chat service based on the old IRC (Internet Relay Chat Protocol) clients.
@@ -59,6 +59,14 @@ And the back end server with the following command :
 ```bash
 nodemon index.js
 ```
+
+## Features in progress
+
+- Password encryption
+- User registration
+- Better anonymous user management
+- Better UI Implementation (replace commands by buttons)
+- Private messages
 
 
 ## Contributors 💪 
