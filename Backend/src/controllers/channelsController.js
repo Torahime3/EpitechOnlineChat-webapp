@@ -1,4 +1,6 @@
 const ChannelModel = require('../models/channels');
+const UserChannelModel = require('../models/user_channels');
+const MessageModel = require('../models/messages');
 
 async function createChannel(req, res) {
   try {
@@ -31,6 +33,21 @@ async function getChannelById(req, res) {
   }
 }
 
+async function getChannelByName(req, res) {
+  try {
+    const channelName = req.params.channelName;
+    const channel = await ChannelModel.findOne({ channel_name: channelName });
+
+    if (!channel) {
+      return res.status(404).json({ message: 'Channel not found' });
+    }
+
+    res.json(channel);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
 async function updateChannelById(req, res) {
   try {
     const updatedChannel = await ChannelModel.findByIdAndUpdate(
@@ -51,13 +68,22 @@ async function updateChannelById(req, res) {
 
 async function deleteChannelById(req, res) {
   try {
-    const deletedChannel = await ChannelModel.findByIdAndDelete(req.params.id);
+    const channelId = req.params.id;
+    const userId = req.body.user_id;
+    const deletedChannel = await ChannelModel.findByIdAndDelete(channelId);
 
     if (!deletedChannel) {
       return res.status(404).json({ message: 'Channel not found' });
     }
 
-    res.json({ message: 'Channel deleted' });
+    await UserChannelModel.deleteMany({ channel_id: channelId });
+    await MessageModel.deleteMany({ channel_id: channelId });
+
+    req.app.get('socketio').emit('channel_' + userId, {
+      userChannel:null
+    })
+    
+    res.json({ message: 'Channel and associated records deleted successfully' });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -67,6 +93,7 @@ module.exports = {
   createChannel,
   getAllChannels,
   getChannelById,
+  getChannelByName,
   updateChannelById,
   deleteChannelById,
 };

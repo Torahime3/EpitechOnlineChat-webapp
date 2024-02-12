@@ -1,5 +1,6 @@
 import { Type } from '../components/SystemChat';
 import { createCommand } from './commands/createCommand';
+import { deleteCommand } from './commands/deleteCommand';
 import { helpCommand } from './commands/helpCommand';
 import { joinCommand } from './commands/joinCommand';
 import { listCommand } from './commands/listCommand';
@@ -26,7 +27,8 @@ export async function handleCommand(command: string, args: string[], selectedCha
             return joinCommand(args, userCookie);
         case "create":
             return createCommand(args);
-
+        case "delete":
+            return deleteCommand(args, userCookie);
 
         default:
 
