@@ -22,7 +22,7 @@ require('dotenv').config()
 //BDD Connect
 const mongoose = require('mongoose')
 mongoose.connect(process.env.DB_URL , { 
-  autoIndex: true, // Crée automatiquement les index définis dans le schéma
+  autoIndex: true,
 }).then(() => console.log("Connection to database succeed")).catch(err => console.log(err))
 
 //Routes
@@ -36,10 +36,10 @@ const { setUserStatus } = require('./controllers/usersController');
 
 
 //logger
-// app.use((req, res, next) => {
-//   console.log(`${req.method} ${req.url}`)
-//   next()
-// })
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url}`)
+  next()
+})
 
 //Middleware
 app.use(bodyParser.json());
@@ -70,9 +70,6 @@ io.on('connection', (socket) => {
     });
   });
 
-  // socket.on('disconnect', (data) => {
-  //   console.log('user disconnected');
-  // });
 })
 
 server.listen(PORT, HOST, () => {
