@@ -21,7 +21,7 @@ export async function handleCommand(command: string, args: string[], selectedCha
         case "users":
             return usersCommand(selectedChannel);
         case "quit":
-            return quitCommand(args, selectedChannel, userCookie);
+            return quitCommand(selectedChannel, userCookie);
         case "join":
             return joinCommand(args, userCookie);
         case "create":

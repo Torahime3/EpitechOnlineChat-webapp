@@ -113,8 +113,7 @@ function ChannelsBox({ setSelectedChannel, selectedChannel }: Props){
                     {channelsList.map((channel, id) => (
                             <div onClick={() => handleChannelClick(channel)} key={id}>
                                 <Channel
-                                    name={channel.channel_id.channel_name}
-                                    id={channel.channel_id}
+                                    channel={channel}
                                     selected={selectedChannel.id === channel.channel_id._id}
                                 />
                             </div>

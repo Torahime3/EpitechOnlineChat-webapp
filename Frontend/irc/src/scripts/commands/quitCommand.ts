@@ -1,7 +1,8 @@
 import { Type } from '../../components/SystemChat';
 
-export async function quitCommand(args: string[], selectedChannel: any, userCookie: string){
+export async function quitCommand(selectedChannel: any, userCookie: string){
 
+    console.log("selectedChannel: " + selectedChannel._id + ", userCookie: " + userCookie)
     try {
         const response = await fetch("api/v1/userChannels/", {
             method: "DELETE",
@@ -9,7 +10,7 @@ export async function quitCommand(args: string[], selectedChannel: any, userCook
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                channel_id: selectedChannel.id,
+                channel_id: selectedChannel.id || selectedChannel._id,
                 user_id: userCookie,
             }),
         });
