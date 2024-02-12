@@ -4,8 +4,6 @@ export async function deleteCommand(args: string[], userCookie : string) {
     const channelName = args[0];
 
     try {
-
-        // Effectuer une requête GET pour obtenir les informations du canal par le nom
         const response = await fetch(`/api/v1/channels/name/${channelName}`);
         const existingChannel = await response.json();
 
@@ -15,7 +13,6 @@ export async function deleteCommand(args: string[], userCookie : string) {
 
         const channelId = existingChannel._id;
 
-        // Utiliser l'ID pour effectuer la requête DELETE
         const deleteResponse = await fetch(`/api/v1/channels/${channelId}`, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },

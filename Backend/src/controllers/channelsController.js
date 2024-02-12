@@ -70,21 +70,19 @@ async function deleteChannelById(req, res) {
   try {
     const channelId = req.params.id;
     const userId = req.body.user_id;
-    // Supprimer le canal de la collection 'channels'
     const deletedChannel = await ChannelModel.findByIdAndDelete(channelId);
 
     if (!deletedChannel) {
       return res.status(404).json({ message: 'Channel not found' });
     }
 
-    // Supprimer les enregistrements correspondants dans la collection 'userchannels'
     await UserChannelModel.deleteMany({ channel_id: channelId });
-
-    // Supprimer les messages correspondants dans la collection 'messages'
     await MessageModel.deleteMany({ channel_id: channelId });
+
     req.app.get('socketio').emit('channel_' + userId, {
       userChannel:null
     })
+    
     res.json({ message: 'Channel and associated records deleted successfully' });
   } catch (error) {
     res.status(500).json({ message: error.message });
