@@ -1,5 +1,9 @@
 # Epitech-Online-Chat (T-JSF-600-TLS_6) (WIP)
 
+## Licence
+
+⚠️This repository is temporarily public and may only be used for reference purposes. Any unauthorized use or redistribution is strictly prohibited until further notice. Please respect copyrights.⚠️
+
 ## Introduction 📖
 The aim of this project is to create an online chat service based on the old IRC (Internet Relay Chat Protocol) clients.
 But using a much more popular protocol today: TCP.
