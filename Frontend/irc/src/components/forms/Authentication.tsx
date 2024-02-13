@@ -79,6 +79,7 @@ function Authentication() {
             })
         }).then(request => request.json())
             .then((response) => {
+                console.log(response)
                 if(response.message == "success"){
                     console.log(response.data)
                     setCookie("user", response.data, {path: "/"})
