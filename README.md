@@ -66,11 +66,12 @@ nodemon index.js
 
 ## Features in progress
 
-- Password encryption
-- User registration
+- [x] Password encryption 
+- [x] User registration
 - Better anonymous user management
 - Better UI Implementation (replace commands by buttons)
 - Private messages
+- File sharing
 
 
 ## Contributors 💪 

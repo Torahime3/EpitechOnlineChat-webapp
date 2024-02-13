@@ -69,6 +69,11 @@ exports.createUser = async (req, res) => {
     let username = req.body.username;
     let password = req.body.password;
 
+    usernameExist = await UserModel.findOne({username: username});
+    if(usernameExist){
+        return res.status(400).json({message: 'Username already exists'});
+    }
+
     const salt = await bcrypt.genSalt(saltRounds);
     const passwordHash = await bcrypt.hash(password, salt);
 
@@ -83,7 +88,10 @@ exports.createUser = async (req, res) => {
     })
 
     await user.save().then(function(){
-        res.status(200).json(user)
+        res.status(200).json({
+            message: "success",
+            data: user
+        })
     }).catch(function(err){
         res.status(500).json(err)
     })

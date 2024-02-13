@@ -43,12 +43,13 @@ function Authentication() {
             }).then(request => request.json())
                 .then((response) => {
                     if(response.message == "success"){
-                        console.log(response.data)
-                        setCookie("user", response.data, {path: "/"})
+                        setRegistration(false)
                     } else {
-                        alert("Identifiant déjà utilisé")
+                        alert("Erreur lors de l'inscription, le pseudo est peut-être déjà pris.")
                     }
             });
+
+            return;
 
         }
 
@@ -176,7 +177,7 @@ function Authentication() {
                     
                     </> )}
 
-                    <p> 
+                    <p className={styles.paragraph}> 
                     {registration ? (
                         <>
                             You already have an account? <a href="#" onClick={() => setRegistration(false)}>Login</a>
