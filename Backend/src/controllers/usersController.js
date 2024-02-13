@@ -1,5 +1,6 @@
-//Constante permettant de récupérer le model des users
 const UserModel = require('../models/users');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 exports.setUserStatus = (setConnected, userToken, app) => {
     UserModel.updateOne({token: userToken}, {connected: setConnected}).then(async () => {
@@ -13,18 +14,24 @@ exports.loginUser = async (req, res) => {
     let username = req.body.username;
     let password = req.body.password;
 
-    const user = await UserModel.findOne({username: username, password: password}).catch(err => {
+    const user = await UserModel.findOne({username: username}).catch(err => {
         res.status(500).json(err);
     });
 
-    if(user) {
+
+    if(!user){
+        return res.status(400).json({message: 'User not found'});
+    } 
+
+    const validPassword = await bcrypt.compare(password, user.password)
+
+    if(validPassword) {
         res.status(200).json({
             message: "success",
             data: user
         });
-    } else {
-        res.status(500).json({message: 'User not found'});
-    }
+        
+    } 
 }
 
 exports.getAllUsers = async (req, res) => {
@@ -61,17 +68,21 @@ exports.loginAsAnonymousUser = async (req, res) => {
 exports.createUser = async (req, res) => {
     let username = req.body.username;
     let password = req.body.password;
+
+    const salt = await bcrypt.genSalt(saltRounds);
+    const passwordHash = await bcrypt.hash(password, salt);
+
     let token = require('crypto').randomBytes(32).toString('hex')
     let role = 0;
 
     const user = new UserModel({
         username: username,
-        password: password,
+        password: passwordHash,
         token: token,
         role: role
     })
 
-    user.save().then(function(){
+    await user.save().then(function(){
         res.status(200).json(user)
     }).catch(function(err){
         res.status(500).json(err)
