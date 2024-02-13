@@ -52,3 +52,9 @@
     background-color: #686f82;
     color: white;
 }
+
+p {
+    color: #fff;
+    text-align: center;
+    margin-top: 10px;
+}

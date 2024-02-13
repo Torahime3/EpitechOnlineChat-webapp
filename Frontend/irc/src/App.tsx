@@ -9,17 +9,18 @@ function App() {
 
     const [cookie] = useCookies(['user']);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [selectedChannel, setSelectedChannel] = useState({
-        id: -1,
-        channel_name: "",
-        channel_description: "",
-        channel_creation_date: ""
-    });
+    const [selectedChannel, setSelectedChannel] = useState({ });
 
     useEffect(() => {
 
         if (cookie.user && cookie.user.token) {
             setIsLoggedIn(true);
+            setSelectedChannel({
+                id: -1,
+                channel_name: "",
+                channel_description: "",
+                channel_creation_date: ""
+            })
             socket.emit("login", cookie.user.token);
         } else {
             setIsLoggedIn(false);
