@@ -57,7 +57,6 @@ exports.createMessage = async (req, res) => {
         await message.save();
 
         const clientMessage = await MessageModel.find({ _id: message._id }).populate('sender_id', 'username');
-        console.log(clientMessage)
 
         req.app.get('socketio').emit('message_' + channelId, {
             clientMessage
