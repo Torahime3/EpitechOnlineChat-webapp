@@ -21,11 +21,17 @@ const privateMessageSchema = new mongoose.Schema({
         ref: 'users',
         required: true
     },
+    channel_id: {
+        type: String,
+        ref: 'channels',
+        required: true,
+    },
 });
 
 privateMessageSchema.index({ sender_id: 1 });
 privateMessageSchema.index({ pm_message_date: -1 });
 privateMessageSchema.index({ target_id: 1 });
+privateMessageSchema.index({ channel_id: 1 });
 
 const PrivateMessage = mongoose.model('privatemessage', privateMessageSchema)
 module.exports = PrivateMessage;

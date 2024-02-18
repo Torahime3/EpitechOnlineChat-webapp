@@ -23,13 +23,22 @@ const getPrivateMessageById = async (req, res) => {
 
 async function createPrivateMessage(req, res) {
   const privateMessage = new PrivateMessage(req.body);
+  console.log('Données du message privé à insérer :', req.body);
+
   try {
+    
     const newPrivateMessage = await privateMessage.save();
+    console.log('Nouveau message privé inséré avec succès :', newPrivateMessage);
     res.status(201).json(newPrivateMessage);
+
   } catch (err) {
+
+    console.error('Erreur lors de l\'insertion du message privé :', err);
     res.status(400).json({ message: err.message });
+
   }
 }
+
 
 
 async function updatePrivateMessage(req, res) {

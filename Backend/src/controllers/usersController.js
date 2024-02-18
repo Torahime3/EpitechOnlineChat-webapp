@@ -45,6 +45,17 @@ exports.getAllUsers = async (req, res) => {
     });
 };
 
+exports.getAllUsernames = async (req, res) => {
+    const users = await UserModel.find().select('-token').catch(err => {
+        res.status(500).json(err);
+      });
+  
+      res.json({
+        success: true,
+        result: users.map(user => user.username),
+      });
+    }
+
 exports.getUserById = async (req, res) => {
 
     const result = await UserModel.findById(req.params.id).select('-token').catch(err => {

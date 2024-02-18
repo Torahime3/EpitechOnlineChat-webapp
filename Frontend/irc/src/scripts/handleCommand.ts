@@ -7,9 +7,10 @@ import { listCommand } from './commands/listCommand';
 import { nickCommand } from './commands/nickCommand';
 import { quitCommand } from './commands/quitCommand';
 import { usersCommand } from './commands/usersCommand';
+import { msgCommand } from './commands/msgCommand';
 
 export async function handleCommand(command: string, args: string[], selectedChannel: number, userCookie: string): Promise<{ result: string; title: string; type?: Type | undefined; }> {
-    console.log("command: " + command + ", args: [" + args + "], selectedChannel: " + selectedChannel, "userCookie: " + userCookie);
+    console.log("command: " + command + ", args: [" + args + "], selectedChannel: " + selectedChannel, "userCookie: " + userCookie, "targetUser: ");
 
     switch (command) {
 
@@ -29,6 +30,8 @@ export async function handleCommand(command: string, args: string[], selectedCha
             return createCommand(args);
         case "delete":
             return deleteCommand(args, userCookie);
+        case "msg":
+            return msgCommand(args,userCookie);
 
         default:
 
