@@ -63,7 +63,7 @@ function Authentication() {
             }).then(request => request.json())
                 .then((response) => {
                     removeCookie("user", {path: "/"})
-                    setCookie("user", response, {path: "/"})
+                    setCookie("user", response.data, {path: "/"})
             });
 
             return;

@@ -50,7 +50,7 @@ exports.createMessage = async (req, res) => {
             sender_id: sender_id,
             message_content: message_content,
             channel_id: channelId,
-            system_chat: system_chat
+            system_chat: system_chat,
         });
 
         // console.log(message);

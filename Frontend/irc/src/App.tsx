@@ -13,8 +13,9 @@ function App() {
 
     useEffect(() => {
 
+        console.log("user cookie",cookie);
         if (cookie.user && cookie.user.token) {
-            setIsLoggedIn(true);
+            setIsLoggedIn(true);    
             setSelectedChannel({
                 id: -1,
                 channel_name: "",

@@ -4,6 +4,7 @@ export enum Type{
     INFO = "#353942",
     SUCCESS = "#31522f",
     WARNING = "#522f2f",
+    PRIVATE = "#561763",
 }
 
 interface Props {
