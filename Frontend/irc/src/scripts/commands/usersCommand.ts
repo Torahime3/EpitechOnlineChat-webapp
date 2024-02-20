@@ -14,10 +14,10 @@ export async function usersCommand(selectedChannel: any){
 
         let userInformation = users.map((user: any) => ({
             username: user.user_id.username,
-            user_id: user.user_id._id, // Ajoutez l'ID de l'utilisateur
+            user_id: user.user_id._id,
         }));
 
-        // Stockez ces informations dans une variable accessible à d'autres parties de votre application.
+        // Stockez ces informations dans une variable global.
         storeUserInformation(userInformation);
 
         let usernames = String(userInformation.map((user: any) => " - " + user.username).join("\n"));

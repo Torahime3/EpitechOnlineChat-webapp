@@ -28,7 +28,6 @@ mongoose.connect(process.env.DB_URL , {
 //Routes
 const userRoutes = require('./routes/usersRoutes');
 const channelRoute = require('./routes/channelsRoutes')
-const privateMessageRoutes = require('./routes/privateMessageRoutes');
 const messagesRoutes = require('./routes/messagesRoutes');
 const userChannels = require('./routes/userChannelsRoutes');
 const { setUserStatus } = require('./controllers/usersController');
@@ -49,7 +48,6 @@ app.use(cors());
 //On dit à express d'utiliser les routes définies dans les fichiers correspondant
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/channels', channelRoute);
-app.use('/api/v1/privateMessages', privateMessageRoutes);
 app.use('/api/v1/messages', messagesRoutes);
 app.use('/api/v1/userChannels', userChannels);
 

@@ -11,6 +11,19 @@ export async function msgCommand(args: string[], userCookie: string): Promise<{ 
     console.log('User Information:', userInformation);
 
     const targetUser = userInformation.find(user => user.username === targetUserName);
+    const currentUser = userInformation.find(user => user.user_id === userCookie);
+
+    if (!currentUser) {
+        console.error('Utilisateur actuel non trouvé');
+        return { type: Type.WARNING, title: 'Erreur', result: 'Utilisateur actuel non trouvé' };
+    }
+
+    const currentUserName = currentUser.username;
+    
+     // Créer le nom du canal en utilisant les noms d'utilisateur
+    const channelName = `${currentUserName} - ${targetUserName}`;
+    console.log('User Sender:', currentUserName);
+
 
     if (!targetUser) {
         console.error('Utilisateur non trouvé');
@@ -27,8 +40,9 @@ export async function msgCommand(args: string[], userCookie: string): Promise<{ 
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                channel_name: targetUserName,
+                channel_name: channelName,
                 channel_description: `Private channel for ${targetUserName}`,
+                is_private: true,
             }),
         });
 
@@ -74,16 +88,15 @@ export async function msgCommand(args: string[], userCookie: string): Promise<{ 
             return { type: Type.WARNING, title: 'Erreur', result: 'Erreur lors de l\'ajout de l\'utilisateur cible au canal' };
         }
 
-        const response = await fetch('/api/v1/privateMessages/', {
+        const response = await fetch('/api/v1/messages/'+channelID, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                sender_id: userCookie,
-                pm_message_content: message,
-                target_id: targetUserID,
-                channel_id: channelID,
+                user_id: userCookie,
+                message_content: message,
+                //channel_id: channelID,
             }),
         });
 

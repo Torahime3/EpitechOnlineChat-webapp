@@ -8,6 +8,7 @@ import { nickCommand } from './commands/nickCommand';
 import { quitCommand } from './commands/quitCommand';
 import { usersCommand } from './commands/usersCommand';
 import { msgCommand } from './commands/msgCommand';
+import { renameCommand } from './commands/renameCommand';
 
 export async function handleCommand(command: string, args: string[], selectedChannel: number, userCookie: string): Promise<{ result: string; title: string; type?: Type | undefined; }> {
     console.log("command: " + command + ", args: [" + args + "], selectedChannel: " + selectedChannel, "userCookie: " + userCookie, "targetUser: ");
@@ -23,7 +24,7 @@ export async function handleCommand(command: string, args: string[], selectedCha
         case "users":
             return usersCommand(selectedChannel);
         case "quit":
-            return quitCommand(selectedChannel, userCookie);
+            return quitCommand(args, userCookie);
         case "join":
             return joinCommand(args, userCookie);
         case "create":
@@ -31,7 +32,9 @@ export async function handleCommand(command: string, args: string[], selectedCha
         case "delete":
             return deleteCommand(args, userCookie);
         case "msg":
-            return msgCommand(args,userCookie);
+            return msgCommand(args, userCookie);
+        case "rename":
+            return renameCommand(args, userCookie);
 
         default:
 

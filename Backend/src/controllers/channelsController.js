@@ -14,12 +14,13 @@ async function createChannel(req, res) {
 
 async function getAllChannels(req, res) {
   try {
-    const channels = await ChannelModel.find();
+    const channels = await ChannelModel.find({ is_private: false });
     res.json(channels);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 }
+
 
 async function getChannelById(req, res) {
   try {
@@ -36,10 +37,10 @@ async function getChannelById(req, res) {
 async function getChannelByName(req, res) {
   try {
     const channelName = req.params.channelName;
-    const channel = await ChannelModel.findOne({ channel_name: channelName });
+    const channel = await ChannelModel.findOne({ channel_name: channelName, is_private: false });
 
     if (!channel) {
-      return res.status(404).json({ message: 'Channel not found' });
+      return res.status(404).json({ message: 'Public channel not found' });
     }
 
     res.json(channel);
@@ -48,8 +49,10 @@ async function getChannelByName(req, res) {
   }
 }
 
+
 async function updateChannelById(req, res) {
   try {
+    const userId = req.body.user_id;
     const updatedChannel = await ChannelModel.findByIdAndUpdate(
       req.params.id,
       req.body,
@@ -59,6 +62,10 @@ async function updateChannelById(req, res) {
     if (!updatedChannel) {
       return res.status(404).json({ message: 'Channel not found' });
     }
+
+    req.app.get('socketio').emit('channel_' + userId, {
+      userChannel:null
+    })
 
     res.json(updatedChannel);
   } catch (error) {

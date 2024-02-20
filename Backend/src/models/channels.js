@@ -12,9 +12,14 @@ const ChannelSchema = new mongoose.Schema({
     channel_creation_date: {
         type: Date,
         required: true,
-        default: Date.now
+        default: Date.now,
     },
-})
+    is_private: {
+        type: Boolean,
+        required: true,
+        default: false,
+    },
+});
 
 ChannelSchema.index({ channel_name: 1 }, { unique: true })
 
