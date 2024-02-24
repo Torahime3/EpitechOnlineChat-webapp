@@ -28,7 +28,6 @@ export async function quitCommand(args: string[], userCookie: string){
         const channelInfo = await channelInfoResponse.json();
         const channelId = channelInfo._id;
 
-        // Supprimer l'utilisateur du canal
         const response = await fetch("/api/v1/userChannels/", {
             method: "DELETE",
             headers: {

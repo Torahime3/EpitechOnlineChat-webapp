@@ -11,7 +11,7 @@ import { msgCommand } from './commands/msgCommand';
 import { renameCommand } from './commands/renameCommand';
 
 export async function handleCommand(command: string, args: string[], selectedChannel: number, userCookie: string): Promise<{ result: string; title: string; type?: Type | undefined; }> {
-    console.log("command: " + command + ", args: [" + args + "], selectedChannel: " + selectedChannel, "userCookie: " + userCookie, "targetUser: ");
+    console.log("command: " + command + ", args: [" + args + "], selectedChannel: " + selectedChannel, "userCookie: " + userCookie);
 
     switch (command) {
 
