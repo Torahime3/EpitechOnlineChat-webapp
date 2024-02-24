@@ -4,13 +4,13 @@ export async function joinCommand(args: string[], userCookie: string){
 
     try{
 
-        if(args.length !== 1){
+        /*if(args.length !== 1){
             return {
                 title: "Join",
                 result: "Invalid number of arguments",
                 type: Type.WARNING,
             }
-        }
+        }*/
 
         const channelName = args[0];
         let channelId = 0; 

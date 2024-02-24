@@ -8,8 +8,11 @@ interface Props {
 
 function Channel(props: Props){
 
-    const [cookie, removeCookie] = useCookies(['user']);
-    const style = props.selected ? "channel_container active" : "channel_container";
+    const [cookie] = useCookies(['user']);
+    let style = props.selected ? "channel_container active" : "channel_container";
+    if(props.channel.channel_id.is_private){
+        style = "channel_container private";
+    }
     console.log(cookie.user._id);
 
     return (
