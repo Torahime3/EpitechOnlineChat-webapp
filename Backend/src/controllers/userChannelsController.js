@@ -22,7 +22,7 @@ exports.getChannelsByUserId = async (req, res) => {
     try {
         const userId = req.params.userId;
         const userChannels = await UserChannelModel.find({ user_id: userId })
-            .populate('channel_id', 'channel_name channel_description channel_creation_date');
+            .populate('channel_id', 'channel_name channel_description channel_creation_date is_private');
 
         res.status(200).json(userChannels);
     } catch (err) {

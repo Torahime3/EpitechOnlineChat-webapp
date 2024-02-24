@@ -77,6 +77,11 @@
     margin-right: 3px;
 }
 
+.private::after{
+    content: "🔒";
+    color: #c5c5c5;
+}
+
 .channel_container:hover{
     background-color: #2c508f;
     border-radius: 10px;
