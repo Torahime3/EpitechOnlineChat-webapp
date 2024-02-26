@@ -68,9 +68,9 @@ nodemon index.js
 
 - [x] Password encryption 
 - [x] User registration
-- Better anonymous user management
+- [x] Better anonymous user management
+- [x] Private messages
 - Better UI Implementation (replace commands by buttons)
-- Private messages
 - File sharing
 
 
