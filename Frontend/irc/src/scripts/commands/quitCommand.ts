@@ -2,6 +2,14 @@ import { Type } from '../../components/SystemChat';
 
 export async function quitCommand(args: string[], userCookie: string){
 
+    if(args.length < 1){
+        return {
+            title: "Quit",
+            result: "Vous devez spécifier le nom d'un channel pour quitter",
+            type: Type.WARNING,
+        }
+    }
+    
     const channelName = args[0];
 
     try {
